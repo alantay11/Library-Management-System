@@ -22,6 +22,7 @@ public class BookSessionBean implements BookSessionBeanRemote, BookSessionBeanLo
     @PersistenceContext(unitName = "LMS-ejbPU")
     private EntityManager em;
 
+    @Override
     public Book createBook(Book book) throws EntityManagerException {
         try {
             em.persist(book);

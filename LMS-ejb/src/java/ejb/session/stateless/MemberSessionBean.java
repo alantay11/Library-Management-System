@@ -22,6 +22,7 @@ public class MemberSessionBean implements MemberSessionBeanRemote, MemberSession
     @PersistenceContext(unitName = "LMS-ejbPU")
     private EntityManager em;
 
+    @Override
     public Member createMember(Member member) throws EntityManagerException {
         try {
             em.persist(member);
