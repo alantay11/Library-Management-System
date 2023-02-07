@@ -5,6 +5,8 @@
  */
 package ejb.session.stateless;
 
+import entity.Member;
+import exception.EntityManagerException;
 import javax.ejb.Remote;
 
 /**
@@ -13,5 +15,7 @@ import javax.ejb.Remote;
  */
 @Remote
 public interface MemberSessionBeanRemote {
-    
+
+    public Member registerMember(String firstName, String lastName, Character gender, Integer age, String identityNo, String phone, String address)  throws EntityManagerException;
+
 }

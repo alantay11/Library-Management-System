@@ -17,5 +17,7 @@ import javax.ejb.Local;
 public interface MemberSessionBeanLocal {
 
     public Member createMember(Member member) throws EntityManagerException;
+
+    public Member registerMember(String firstName, String lastName, Character gender, Integer age, String identityNo, String phone, String address)  throws EntityManagerException;
     
 }
