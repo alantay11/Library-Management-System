@@ -5,6 +5,8 @@
  */
 package ejb.session.stateless;
 
+import entity.Book;
+import exception.BookNotFoundException;
 import javax.ejb.Remote;
 
 /**
@@ -13,5 +15,7 @@ import javax.ejb.Remote;
  */
 @Remote
 public interface BookSessionBeanRemote {
-    
+
+    public Book retrieveBookwithISBN(String isbn) throws BookNotFoundException;
+
 }

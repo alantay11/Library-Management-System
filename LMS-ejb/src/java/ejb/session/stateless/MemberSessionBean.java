@@ -7,12 +7,14 @@ package ejb.session.stateless;
 
 import entity.Member;
 import exception.EntityManagerException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import exception.MemberNotFoundException;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
+import javax.persistence.Query;
 
 /**
  *
@@ -52,6 +54,23 @@ public class MemberSessionBean implements MemberSessionBeanRemote, MemberSession
             return createMember(member);
         } catch (EntityManagerException ex) {
             throw ex; 
+        }
+    }
+
+    @Override
+    public Member retrieveMemberwithID(String id) throws MemberNotFoundException {
+        Query query = em.createQuery("SELECT m FROM Member m WHERE m.identityNo = :id");
+        query.setParameter("id", id);
+        
+         try
+        {
+            Member member = (Member)query.getSingleResult();
+            member.getLending().size();
+            return member;
+        }
+        catch(NoResultException | NonUniqueResultException ex)
+        {
+            throw new MemberNotFoundException("Member with ID: " + id + " does not exist!");
         }
     }
 

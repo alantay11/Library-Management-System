@@ -5,6 +5,8 @@
  */
 package ejb.session.stateless;
 
+import entity.LendAndReturn;
+import exception.EntityManagerException;
 import javax.ejb.Remote;
 
 /**
@@ -13,5 +15,7 @@ import javax.ejb.Remote;
  */
 @Remote
 public interface LendAndReturnSessionBeanRemote {
+
+    public LendAndReturn lendBook(LendAndReturn lendAndReturn, String memberIDNum, String isbn) throws EntityManagerException;
     
 }

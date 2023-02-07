@@ -6,11 +6,16 @@
 package ejb.session.stateless;
 
 import entity.Book;
+import exception.BookNotFoundException;
 import exception.EntityManagerException;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
+import javax.persistence.Query;
+import static jdk.nashorn.internal.runtime.Debug.id;
 
 /**
  *
@@ -30,6 +35,20 @@ public class BookSessionBean implements BookSessionBeanRemote, BookSessionBeanLo
             return book;
         } catch (PersistenceException ex) {
             throw new EntityManagerException(ex.getMessage());
+        }
+    }
+
+    @Override
+    public Book retrieveBookwithISBN(String isbn) throws BookNotFoundException {
+        Query query = em.createQuery("SELECT b FROM Book b WHERE b.isbn = :isbn");
+        query.setParameter("isbn", isbn);
+
+        try {
+            Book book = (Book) query.getSingleResult();
+            book.getLending().size();
+            return book;
+        } catch (NoResultException | NonUniqueResultException ex) {
+            throw new BookNotFoundException("Book with ISBN: " + isbn + " does not exist!");
         }
     }
 

@@ -58,7 +58,7 @@ public class StaffSessionBean implements StaffSessionBeanRemote, StaffSessionBea
     
     private Staff retrieveStaffByUsername(String username) throws StaffNotFoundException
     {
-        Query query = em.createQuery("SELECT s FROM StaffEntity s WHERE s.username = :inUsername");
+        Query query = em.createQuery("SELECT s FROM Staff s WHERE s.username = :inUsername");
         query.setParameter("inUsername", username);
         
         try
