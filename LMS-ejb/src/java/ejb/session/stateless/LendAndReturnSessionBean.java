@@ -18,6 +18,8 @@ import java.util.concurrent.TimeUnit;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
@@ -94,12 +96,14 @@ public class LendAndReturnSessionBean implements LendAndReturnSessionBeanRemote,
     
 
     @Override
-    public List<LendAndReturn> retrieveAllLendAndReturnsOfMember(String identityNo) {
-        Query query = em.createQuery("SELECT l FROM LendAndReturn l WHERE l.memberId = :identityNo");
+    public List<LendAndReturn> retrieveAllLendAndReturnsOfMember(String identityNo) throws MemberNotFoundException {
+        try {
+               Query query = em.createQuery("SELECT l FROM LendAndReturn l WHERE l.memberId = :identityNo");
         return query.setParameter("identityNo", identityNo).getResultList();
-    }   
-    
-    
+        } catch (NoResultException | NonUniqueResultException ex) {
+            throw new MemberNotFoundException(ex.getMessage());
+        }
+    }      
     
 
 }

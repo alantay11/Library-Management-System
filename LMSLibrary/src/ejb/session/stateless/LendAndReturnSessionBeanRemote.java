@@ -7,6 +7,7 @@ package ejb.session.stateless;
 
 import entity.LendAndReturn;
 import exception.EntityManagerException;
+import exception.MemberNotFoundException;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.ejb.Remote;
@@ -24,6 +25,6 @@ public interface LendAndReturnSessionBeanRemote {
 
     LendAndReturn returnBook(LendAndReturn lendAndReturn);
 
-    List<LendAndReturn> retrieveAllLendAndReturnsOfMember(String identityNo);
+    List<LendAndReturn> retrieveAllLendAndReturnsOfMember(String identityNo)  throws MemberNotFoundException;
     
 }
