@@ -8,6 +8,7 @@ package ejb.session.stateless;
 import entity.Staff;
 import exception.EntityManagerException;
 import exception.InvalidLoginException;
+import exception.StaffNotFoundException;
 import javax.ejb.Local;
 
 /**
@@ -19,6 +20,8 @@ public interface StaffSessionBeanLocal {
 
     public Staff createStaff(Staff staff) throws EntityManagerException;
 
-    Staff loginStaff(String username, String password)throws InvalidLoginException;
+    public Staff loginStaff(String username, String password) throws InvalidLoginException;
+
+    public Staff retrieveStaffByUsername(String username) throws StaffNotFoundException;
     
 }
