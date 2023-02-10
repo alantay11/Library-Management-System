@@ -7,6 +7,8 @@ package ejb.session.stateless;
 
 import entity.LendAndReturn;
 import exception.EntityManagerException;
+import java.math.BigDecimal;
+import java.util.List;
 import javax.ejb.Remote;
 
 /**
@@ -17,5 +19,11 @@ import javax.ejb.Remote;
 public interface LendAndReturnSessionBeanRemote {
 
     public LendAndReturn lendBook(LendAndReturn lendAndReturn, String memberIDNum, String isbn) throws EntityManagerException;
+
+    BigDecimal calculateFine(LendAndReturn lendAndReturn);
+
+    LendAndReturn returnBook(LendAndReturn lendAndReturn);
+
+    List<LendAndReturn> retrieveAllLendAndReturnsOfMember(String identityNo);
     
 }

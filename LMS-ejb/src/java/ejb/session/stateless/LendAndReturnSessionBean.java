@@ -11,11 +11,16 @@ import entity.Member;
 import exception.BookNotFoundException;
 import exception.EntityManagerException;
 import exception.MemberNotFoundException;
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
+import javax.persistence.Query;
 
 /**
  *
@@ -42,14 +47,59 @@ public class LendAndReturnSessionBean implements LendAndReturnSessionBeanRemote,
 
             lendAndReturn.setMember(member);
             lendAndReturn.setBook(book);
+            em.persist(lendAndReturn);
 
             member.getLending().add(lendAndReturn);
             book.getLending().add(lendAndReturn);
-            em.persist(lendAndReturn);
+
             em.flush();
             return lendAndReturn;
         } catch (MemberNotFoundException | BookNotFoundException | PersistenceException ex) {
             throw new EntityManagerException(ex.getMessage());
         }
     }
+    
+    // Use Case 4
+    @Override
+    public BigDecimal calculateFine(LendAndReturn lendAndReturn) {
+        long diff = (new Date(System.currentTimeMillis())).getTime() - lendAndReturn.getLendDate().getTime();
+        
+        long daysDiff = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);        
+        System.out.println("Days= " + daysDiff);
+        
+        double fineAmt = (daysDiff - 14) * 0.50;
+        BigDecimal fine = new BigDecimal(fineAmt);
+        
+        return fine;
+    }
+    
+    // Use Case 5
+    @Override
+    public LendAndReturn returnBook(LendAndReturn lendAndReturn) {
+        LendAndReturn lAR = em.find(LendAndReturn.class, lendAndReturn.getLendId());
+        long diff = (new Date(System.currentTimeMillis())).getTime() - lendAndReturn.getLendDate().getTime();
+        
+        long daysDiff = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);        
+        System.out.println("Days= " + daysDiff);
+        
+        double fineAmt = (daysDiff - 14) * 0.50;
+        BigDecimal fine = new BigDecimal(fineAmt);
+        
+        lAR.setReturnDate(new Date(System.currentTimeMillis()));
+        lAR.setFineAmount(fine);
+        em.flush();
+        return lAR;
+    }
+    
+    
+
+    @Override
+    public List<LendAndReturn> retrieveAllLendAndReturnsOfMember(String identityNo) {
+        Query query = em.createQuery("SELECT l FROM LendAndReturn l WHERE l.memberId = :identityNo");
+        return query.setParameter("identityNo", identityNo).getResultList();
+    }   
+    
+    
+    
+
 }

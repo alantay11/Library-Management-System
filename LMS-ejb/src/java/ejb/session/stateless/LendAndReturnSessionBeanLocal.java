@@ -5,6 +5,9 @@
  */
 package ejb.session.stateless;
 
+import entity.LendAndReturn;
+import java.math.BigDecimal;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -13,5 +16,11 @@ import javax.ejb.Local;
  */
 @Local
 public interface LendAndReturnSessionBeanLocal {
+
+    BigDecimal calculateFine(LendAndReturn lendAndReturn);
+
+    LendAndReturn returnBook(LendAndReturn lendAndReturn);
+
+    List<LendAndReturn> retrieveAllLendAndReturnsOfMember(String identityNo);
     
 }
