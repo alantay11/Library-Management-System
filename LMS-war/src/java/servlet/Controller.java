@@ -43,19 +43,16 @@ public class Controller extends HttpServlet {
             path = path.split("/")[1];
 
             switch (path) {
-                case "loginStaff":
-                    // fill in the stuff here
+                case "loginStaff":                    
                     String username = request.getParameter("username");
                     String password = request.getParameter("password");
                     staffManager.loginStaff(username, password);
                     
-                    response.sendRedirect(request.getContextPath()
-                            + "/Controller/loggedInIndex");
-                    break;
+                    response.sendRedirect("loggedInIndex.jsp");
+                    return;
 
                 case "logoutStaff":
-                    response.sendRedirect(request.getContextPath()
-                            + "/Controller/loginStaff");
+                    response.sendRedirect(request.getContextPath());
                     break;
 
                 case "registerMember":
