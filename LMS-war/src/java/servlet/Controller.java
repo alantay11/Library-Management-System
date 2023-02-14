@@ -48,6 +48,9 @@ public class Controller extends HttpServlet {
                     String username = request.getParameter("username");
                     String password = request.getParameter("password");
                     staffManager.loginStaff(username, password);
+                    
+                    response.sendRedirect(request.getContextPath()
+                            + "/Controller/loggedInIndex");
                     break;
 
                 case "logoutStaff":

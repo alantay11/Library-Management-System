@@ -15,7 +15,6 @@ import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
-import static jdk.nashorn.internal.runtime.Debug.id;
 
 /**
  *
