@@ -46,16 +46,19 @@ public class Controller extends HttpServlet {
                 case "loginStaff": {
                     break;
                 }
+                case "loggedInIndex": {
+                    break;
+                }
                 case "doLoginStaff": {
                     String username = request.getParameter("username");
                     String password = request.getParameter("password");
                     staffManager.loginStaff(username, password);
-
-                    response.sendRedirect("loggedInIndex.jsp");
+                    response.sendRedirect(request.getContextPath()
+                            + "/Controller/loggedInIndex");
                     return;
                 }
                 case "logoutStaff": {
-                    response.sendRedirect(request.getContextPath());
+                    response.sendRedirect("index.html");
                     break;
                 }
                 case "registerMember": {

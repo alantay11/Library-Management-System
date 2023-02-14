@@ -12,6 +12,6 @@
         <title>Menu</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <%@include file="layout/header.jsp" %>
     </body>
 </html>
