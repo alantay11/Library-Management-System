@@ -6,6 +6,7 @@
 package ejb.session.stateless;
 
 import entity.LendAndReturn;
+import exception.BookNotAvailableException;
 import exception.EntityManagerException;
 import exception.MemberNotFoundException;
 import java.math.BigDecimal;
@@ -19,7 +20,7 @@ import javax.ejb.Remote;
 @Remote
 public interface LendAndReturnSessionBeanRemote {
 
-    public LendAndReturn lendBook(LendAndReturn lendAndReturn, String memberIDNum, String isbn) throws EntityManagerException;
+    public LendAndReturn lendBook(LendAndReturn lendAndReturn, String memberIDNum, String isbn) throws EntityManagerException, BookNotAvailableException;
 
     BigDecimal calculateFine(LendAndReturn lendAndReturn);
 

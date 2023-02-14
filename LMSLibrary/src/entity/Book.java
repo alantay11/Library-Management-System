@@ -32,11 +32,14 @@ public class Book implements Serializable {
     private String isbn;
     @Column(nullable = false)
     private String author;
+    @Column(nullable = false)
+    private boolean available;
 
     @OneToMany(mappedBy = "book")
     private List<LendAndReturn> lending;
 
     public Book() {
+        this.available = true;
     }
 
     public Long getBookId() {
@@ -102,6 +105,14 @@ public class Book implements Serializable {
 
     public void setLending(List<LendAndReturn> lending) {
         this.lending = lending;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 
 }
