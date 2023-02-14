@@ -21,7 +21,7 @@ import javax.persistence.Query;
  * @author Uni
  */
 @Stateless
-public class BookSessionBean implements BookSessionBeanRemote, BookSessionBeanLocal {
+public class BookSessionBean implements BookSessionBeanLocal {
 
     @PersistenceContext(unitName = "LMS-ejbPU")
     private EntityManager em;

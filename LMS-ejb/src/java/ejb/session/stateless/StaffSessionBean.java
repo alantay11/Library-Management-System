@@ -22,7 +22,7 @@ import javax.persistence.Query;
  * @author Uni
  */
 @Stateless
-public class StaffSessionBean implements StaffSessionBeanRemote, StaffSessionBeanLocal {
+public class StaffSessionBean implements StaffSessionBeanLocal {
 
     @PersistenceContext(unitName = "LMS-ejbPU")
     private EntityManager em;

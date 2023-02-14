@@ -16,6 +16,6 @@ import javax.ejb.Remote;
 @Remote
 public interface BookSessionBeanRemote {
 
-    public Book retrieveBookwithISBN(String isbn) throws BookNotFoundException;
+    Book retrieveBookwithISBN(String isbn) throws BookNotFoundException;
 
 }

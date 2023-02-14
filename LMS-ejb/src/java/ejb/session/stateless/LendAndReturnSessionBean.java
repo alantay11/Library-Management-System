@@ -30,7 +30,7 @@ import javax.persistence.Query;
  * @author Uni
  */
 @Stateless
-public class LendAndReturnSessionBean implements LendAndReturnSessionBeanRemote, LendAndReturnSessionBeanLocal {
+public class LendAndReturnSessionBean implements LendAndReturnSessionBeanLocal {
 
     @EJB
     private BookSessionBeanLocal bookSessionBean;

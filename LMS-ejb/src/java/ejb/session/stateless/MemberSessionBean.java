@@ -21,7 +21,7 @@ import javax.persistence.Query;
  * @author Uni
  */
 @Stateless
-public class MemberSessionBean implements MemberSessionBeanRemote, MemberSessionBeanLocal {
+public class MemberSessionBean implements MemberSessionBeanLocal {
 
     @PersistenceContext(unitName = "LMS-ejbPU")
     private EntityManager em;
