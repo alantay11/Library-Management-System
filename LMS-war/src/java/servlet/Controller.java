@@ -8,6 +8,7 @@ package servlet;
 import ejb.session.stateless.LendAndReturnSessionBeanLocal;
 import ejb.session.stateless.MemberSessionBeanLocal;
 import ejb.session.stateless.StaffSessionBeanLocal;
+import exception.InvalidLoginException;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -49,6 +50,9 @@ public class Controller extends HttpServlet {
                 case "loggedInIndex": {
                     break;
                 }
+                case "registerMember": {
+                    break;
+                }
                 case "doLoginStaff": {
                     String username = request.getParameter("username");
                     String password = request.getParameter("password");
@@ -58,10 +62,11 @@ public class Controller extends HttpServlet {
                     return;
                 }
                 case "logoutStaff": {
-                    response.sendRedirect("index.html");
-                    break;
+                    response.sendRedirect(request.getContextPath()
+                            + "/Controller/loginStaff");
+                    return;
                 }
-                case "registerMember": {
+                case "doRegisterMember": {
                     String firstName = request.getParameter("firstName");
                     String lastName = request.getParameter("lastName");
                     Character gender = request.getParameter("gender").toCharArray()[0];
@@ -70,7 +75,9 @@ public class Controller extends HttpServlet {
                     String phone = request.getParameter("phone");
                     String address = request.getParameter("address");
                     memberManager.registerMember(firstName, lastName, gender, age, identityNo, phone, address);
-                    break;
+                    response.sendRedirect(request.getContextPath()
+                            + "/Controller/loggedInIndex");
+                    return;
                 }
                 case "lendBook": {
                     String identityNo = request.getParameter("identityNo");
@@ -105,6 +112,10 @@ public class Controller extends HttpServlet {
                     break;
             }
             request.getRequestDispatcher("/" + path + ".jsp")
+                    .forward(request, response);
+        } catch (InvalidLoginException e) {
+            e.printStackTrace();
+            request.getRequestDispatcher("/errorLogin.jsp")
                     .forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
