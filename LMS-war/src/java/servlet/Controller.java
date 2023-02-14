@@ -5,6 +5,7 @@
  */
 package servlet;
 
+import ejb.session.stateless.MemberSessionBeanLocal;
 import ejb.session.stateless.StaffSessionBeanLocal;
 import exception.InvalidLoginException;
 import java.io.IOException;
@@ -16,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import manager.MemberManager;
 import manager.StaffManager;
 
 /**
@@ -25,15 +27,20 @@ import manager.StaffManager;
 public class Controller extends HttpServlet {
 
     @EJB
+    private MemberSessionBeanLocal memberSessionBean;
+
+    @EJB
     private StaffSessionBeanLocal staffSessionBean;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
             StaffManager staffManager = new StaffManager(staffSessionBean);
+            MemberManager memberManager = new MemberManager(memberSessionBean);
+
             String path = request.getPathInfo();
             path = path.split("/")[1];
-            
+
             switch (path) {
                 case "loginStaff":
                     // fill in the stuff here

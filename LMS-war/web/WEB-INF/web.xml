@@ -19,4 +19,10 @@
         <local>ejb.session.stateless.StaffSessionBeanLocal</local>
         <ejb-link>LMS-ejb.jar#StaffSessionBean</ejb-link>
     </ejb-local-ref>
+    <ejb-local-ref>
+        <ejb-ref-name>MemberSessionBean</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <local>ejb.session.stateless.MemberSessionBeanLocal</local>
+        <ejb-link>LMS-ejb.jar#MemberSessionBean</ejb-link>
+    </ejb-local-ref>
 </web-app>
