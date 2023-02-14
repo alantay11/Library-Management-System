@@ -8,7 +8,7 @@
     <body>
 
         <h1>Login staff</h1>
-        <form action="loginStaff" method="POST">
+        <form action="doLoginStaff" method="POST">
             <label for="username">Name:     </label><input type="text" id="username" 
                                                        name="username" /><br />
             <label for="password">Password: </label><input type="text" id="password" 

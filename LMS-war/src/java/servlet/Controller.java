@@ -43,19 +43,22 @@ public class Controller extends HttpServlet {
             path = path.split("/")[1];
 
             switch (path) {
-                case "loginStaff":                    
+                case "loginStaff": {
+                    break;
+                }
+                case "doLoginStaff": {
                     String username = request.getParameter("username");
                     String password = request.getParameter("password");
                     staffManager.loginStaff(username, password);
-                    
+
                     response.sendRedirect("loggedInIndex.jsp");
                     return;
-
-                case "logoutStaff":
+                }
+                case "logoutStaff": {
                     response.sendRedirect(request.getContextPath());
                     break;
-
-                case "registerMember":
+                }
+                case "registerMember": {
                     String firstName = request.getParameter("firstName");
                     String lastName = request.getParameter("lastName");
                     Character gender = request.getParameter("gender").toCharArray()[0];
@@ -65,34 +68,41 @@ public class Controller extends HttpServlet {
                     String address = request.getParameter("address");
                     memberManager.registerMember(firstName, lastName, gender, age, identityNo, phone, address);
                     break;
-
-                case "lendBook":
-                    identityNo = request.getParameter("identityNo");
+                }
+                case "lendBook": {
+                    String identityNo = request.getParameter("identityNo");
                     String isbn = request.getParameter("isbn");
                     lendAndReturnManager.lendBook(identityNo, isbn);
                     break;
-
-                case "retrieveAllLendAndReturnsOfMember":
-                    identityNo = request.getParameter("identityNo");
+                }
+                case "retrieveAllLendAndReturnsOfMember": {
+                    String identityNo = request.getParameter("identityNo");
                     lendAndReturnManager.retrieveAllLendAndReturnsOfMember(identityNo);
                     break;
-                case "viewFineAmount":
-                    identityNo = request.getParameter("identityNo");
+                }
+                case "viewFineAmount": {
+                    String identityNo = request.getParameter("identityNo");
                     lendAndReturnManager.retrieveAllLendAndReturnsOfMember(identityNo);
 
                     long lendAndReturnId = Long.parseLong(request.getParameter("lendAndReturnId"));
                     lendAndReturnManager.calculateFine(lendAndReturnId);
                     break;
-
-                case "returnBook":
-                    identityNo = request.getParameter("identityNo");
+                }
+                case "returnBook": {
+                    String identityNo = request.getParameter("identityNo");
                     lendAndReturnManager.retrieveAllLendAndReturnsOfMember(identityNo);
 
-                    lendAndReturnId = Long.parseLong(request.getParameter("lendAndReturnId"));
+                    long lendAndReturnId = Long.parseLong(request.getParameter("lendAndReturnId"));
                     lendAndReturnManager.returnBook(lendAndReturnId);
 
                     break;
+                }
+                default:
+                    path = "error";
+                    break;
             }
+            request.getRequestDispatcher("/" + path + ".jsp")
+                    .forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
             request.getRequestDispatcher("/error.jsp")

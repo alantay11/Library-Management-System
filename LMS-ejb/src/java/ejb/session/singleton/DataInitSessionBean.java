@@ -49,14 +49,14 @@ public class DataInitSessionBean {
             Staff eric = new Staff();
             eric.setFirstName("Eric");
             eric.setLastName("Some");
-            eric.setUserName("eric");
+            eric.setUsername("eric");
             eric.setPassword("password");
             staffSessionBean.createStaff(eric);
 
             Staff sarah = new Staff();
             sarah.setFirstName("Sarah");
             sarah.setLastName("Brightman");
-            sarah.setUserName("sarah");
+            sarah.setUsername("sarah");
             sarah.setPassword("password");
             staffSessionBean.createStaff(sarah);
 

@@ -30,7 +30,7 @@ public class StaffManager {
         Staff staff = new Staff();
         staff.setFirstName(firstName);
         staff.setLastName(lastName);
-        staff.setUserName(userName);
+        staff.setUsername(userName);
         staff.setPassword(password);
         return staffSessionBeanLocal.createStaff(staff);
     }
