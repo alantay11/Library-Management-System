@@ -20,11 +20,11 @@ import javax.ejb.Remote;
 @Remote
 public interface LendAndReturnSessionBeanRemote {
 
-    public LendAndReturn lendBook(LendAndReturn lendAndReturn, String memberIDNum, String isbn) throws EntityManagerException, BookNotAvailableException;
+    public LendAndReturn lendBook(String memberIDNum, String isbn) throws EntityManagerException, BookNotAvailableException;
 
-    BigDecimal calculateFine(LendAndReturn lendAndReturn);
+    BigDecimal calculateFine(long lendAndReturnId);
 
-    LendAndReturn returnBook(LendAndReturn lendAndReturn);
+    LendAndReturn returnBook(long lendAndReturnId);
 
     List<LendAndReturn> retrieveAllLendAndReturnsOfMember(String identityNo)  throws MemberNotFoundException;
     

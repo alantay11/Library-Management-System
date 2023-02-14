@@ -39,7 +39,6 @@ public class Book implements Serializable {
     private List<LendAndReturn> lending;
 
     public Book() {
-        this.available = true;
     }
 
     public Long getBookId() {

@@ -43,10 +43,11 @@ public class LendAndReturnSessionBean implements LendAndReturnSessionBeanRemote,
 
     // Use Case 3
     @Override
-    public LendAndReturn lendBook(LendAndReturn lendAndReturn, String memberIDNum, String isbn) throws EntityManagerException, BookNotAvailableException {
+    public LendAndReturn lendBook(String memberIDNum, String isbn) throws EntityManagerException, BookNotAvailableException {
         try {
             Member member = memberSessionBean.retrieveMemberwithID(memberIDNum);
             Book book = bookSessionBean.retrieveBookwithISBN(isbn);
+            LendAndReturn lendAndReturn = new LendAndReturn();
 
             if (book.isAvailable()) {
                 lendAndReturn.setMember(member);
@@ -69,7 +70,8 @@ public class LendAndReturnSessionBean implements LendAndReturnSessionBeanRemote,
 
     // Use Case 4
     @Override
-    public BigDecimal calculateFine(LendAndReturn lendAndReturn) {
+    public BigDecimal calculateFine(long lendAndReturnId) {
+        LendAndReturn lendAndReturn = em.find(LendAndReturn.class, lendAndReturnId);
         long diff = (new Date(System.currentTimeMillis())).getTime() - lendAndReturn.getLendDate().getTime();
 
         long daysDiff = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
@@ -83,9 +85,9 @@ public class LendAndReturnSessionBean implements LendAndReturnSessionBeanRemote,
 
     // Use Case 5
     @Override
-    public LendAndReturn returnBook(LendAndReturn lendAndReturn) {
-        LendAndReturn lAR = em.find(LendAndReturn.class, lendAndReturn.getLendId());
-        long diff = (new Date(System.currentTimeMillis())).getTime() - lendAndReturn.getLendDate().getTime();
+    public LendAndReturn returnBook(long lendAndReturnId) {
+        LendAndReturn lAR = em.find(LendAndReturn.class, lendAndReturnId);
+        long diff = (new Date(System.currentTimeMillis())).getTime() - lAR.getLendDate().getTime();
 
         long daysDiff = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
         System.out.println("Days= " + daysDiff);

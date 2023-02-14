@@ -6,6 +6,8 @@
 package ejb.session.stateless;
 
 import entity.LendAndReturn;
+import exception.BookNotAvailableException;
+import exception.EntityManagerException;
 import exception.MemberNotFoundException;
 import java.math.BigDecimal;
 import java.util.List;
@@ -18,10 +20,12 @@ import javax.ejb.Local;
 @Local
 public interface LendAndReturnSessionBeanLocal {
 
-    BigDecimal calculateFine(LendAndReturn lendAndReturn);
+    public LendAndReturn lendBook(String memberIDNum, String isbn) throws EntityManagerException, BookNotAvailableException;
 
-    LendAndReturn returnBook(LendAndReturn lendAndReturn);
+    BigDecimal calculateFine(long lendAndReturnId);
 
-    List<LendAndReturn> retrieveAllLendAndReturnsOfMember(String identityNo)  throws MemberNotFoundException;
-    
+    LendAndReturn returnBook(long lendAndReturnId);
+
+    List<LendAndReturn> retrieveAllLendAndReturnsOfMember(String identityNo) throws MemberNotFoundException;
+
 }
