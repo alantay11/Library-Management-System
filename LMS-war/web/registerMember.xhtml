@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./layout/defaultLoggedIn.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+        Register Member
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form>
+            <h:outputLabel for="firstName">First Name: </h:outputLabel>
+            <h:inputText id="firstName" value="#{memberManagedBean.firstName}" /><br/>
+            <h:outputLabel for="lastName">Last Name: </h:outputLabel>
+            <h:inputText id="lastName" value="#{memberManagedBean.lastName}"/><br/>
+
+            Gender: <h:selectOneMenu value="#{memberManagedBean.gender}">
+                <f:selectItem itemValue = "1" itemLabel = "Female" /> 
+                <f:selectItem itemValue = "2" itemLabel = "Male" /> 
+            </h:selectOneMenu><br/>
+            
+            <h:outputLabel for="age">Age: </h:outputLabel>
+            <h:inputText id="age" value="#{memberManagedBean.age}"/><br/>
+
+            <h:outputLabel for="identityNo">Identity No: </h:outputLabel>
+            <h:inputText id="identityNo" value="#{memberManagedBean.identityNo}"/><br/>
+            <h:outputLabel for="phone">Phone no: </h:outputLabel>
+            <h:inputText id="phone" value="#{memberManagedBean.phone}"/><br/>
+            <h:outputLabel for="address">Address: </h:outputLabel>
+            <h:inputText id="address" value="#{memberManagedBean.address}"/><br/>
+
+
+
+            <h:commandButton value="Submit" 
+                             actionListener="#{memberManagedBean.registerMember}"
+                             action="mainMenuLoggedIn.xhtml?faces-redirect=true"/>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

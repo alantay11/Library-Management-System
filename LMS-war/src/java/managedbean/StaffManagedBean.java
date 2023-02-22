@@ -25,18 +25,19 @@ public class StaffManagedBean {
 
     @EJB
     private StaffSessionBeanLocal staffSessionBeanLocal;
-
+    private String firstName;
+    private String lastName;
     private String username;
     private String password;
 
     public StaffManagedBean() {
     }
 
-    public Staff createStaff(String firstName, String lastName, String userName, String password) throws InvalidLoginException, EntityManagerException {
+    public Staff createStaff(ActionEvent evt) throws InvalidLoginException, EntityManagerException {
         Staff staff = new Staff();
         staff.setFirstName(firstName);
         staff.setLastName(lastName);
-        staff.setUsername(userName);
+        staff.setUsername(username);
         staff.setPassword(password);
         return staffSessionBeanLocal.createStaff(staff);
     }
@@ -45,11 +46,10 @@ public class StaffManagedBean {
         return staffSessionBeanLocal.loginStaff(username, password);
     }
 
-    private Staff retrieveStaffByUsername(String username) throws StaffNotFoundException {
+    private Staff retrieveStaffByUsername(ActionEvent evt) throws StaffNotFoundException {
         return staffSessionBeanLocal.retrieveStaffByUsername(username);
     }
-    
-    
+
     public StaffSessionBeanLocal getStaffSessionBeanLocal() {
         return staffSessionBeanLocal;
     }
