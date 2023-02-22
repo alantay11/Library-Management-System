@@ -8,6 +8,7 @@ package ejb.session.stateless;
 import entity.Book;
 import exception.BookNotFoundException;
 import exception.EntityManagerException;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -49,6 +50,11 @@ public class BookSessionBean implements BookSessionBeanLocal {
         } catch (NoResultException | NonUniqueResultException ex) {
             throw new BookNotFoundException("Book with ISBN: " + isbn + " does not exist!");
         }
+    }
+
+    @Override
+    public List<Book> retrieveAllBooks() {
+        return em.createQuery("SELECT b FROM Book b").getResultList();
     }
 
 }

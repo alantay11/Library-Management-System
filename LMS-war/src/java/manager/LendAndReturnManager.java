@@ -35,10 +35,11 @@ public class LendAndReturnManager {
     public BigDecimal calculateFine(long lendAndReturnId) {
         return lendAndReturnSessionBeanLocal.calculateFine(lendAndReturnId);
     }
-     public LendAndReturn returnBook(long lendAndReturnId) {
-         return lendAndReturnSessionBeanLocal.returnBook(lendAndReturnId);
+
+    public LendAndReturn returnBook(long lendAndReturnId) {
+        return lendAndReturnSessionBeanLocal.returnBook(lendAndReturnId);
     }
-    
+
     public List<LendAndReturn> retrieveAllLendAndReturnsOfMember(String identityNo) throws MemberNotFoundException {
         return lendAndReturnSessionBeanLocal.retrieveAllLendAndReturnsOfMember(identityNo);
     }

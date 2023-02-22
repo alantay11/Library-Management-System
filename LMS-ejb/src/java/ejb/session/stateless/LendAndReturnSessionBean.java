@@ -51,7 +51,11 @@ public class LendAndReturnSessionBean implements LendAndReturnSessionBeanLocal {
 
             if (book.isAvailable()) {
                 lendAndReturn.setMember(member);
+                lendAndReturn.setMemberId(member.getMemberId());
                 lendAndReturn.setBook(book);
+                lendAndReturn.setBookId(book.getBookId());
+                lendAndReturn.setLendDate(new Date(System.currentTimeMillis()));
+
                 em.persist(lendAndReturn);
 
                 member.getLending().add(lendAndReturn);

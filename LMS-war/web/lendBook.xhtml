@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./layout/defaultLoggedIn.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+
+        <h:form>
+            <h:commandButton value="View books" 
+                             actionListener="#{bookManagedBean.retrieveAllBooks}"/>
+            
+            <ui:repeat var="book" value="#{bookManagedBean.allBooks}">
+                <li>#{book.title} - #{book.isbn} - #{book.author} - Available: #{book.available}</li>
+            </ui:repeat>
+
+            <h:outputLabel for="identityNo">Member's Identity No: </h:outputLabel>
+            <h:inputText id="identityNo" value="#{lendAndReturnManagedBean.identityNo}" /><br/>
+            <h:outputLabel for="isbn">ISBN: </h:outputLabel>
+            <h:inputText id="isbn" value="#{lendAndReturnManagedBean.isbn}"/><br/>
+
+            <h:commandButton value="Borrow book" 
+                             actionListener="#{lendAndReturnManagedBean.lendBook}"/>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
