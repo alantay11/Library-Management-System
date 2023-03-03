@@ -10,9 +10,10 @@ import entity.Staff;
 import exception.EntityManagerException;
 import exception.InvalidLoginException;
 import exception.StaffNotFoundException;
+import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.event.ActionEvent;
 
 /**
@@ -20,8 +21,8 @@ import javax.faces.event.ActionEvent;
  * @author Uni
  */
 @Named(value = "staffManagedBean")
-@RequestScoped
-public class StaffManagedBean {
+@SessionScoped
+public class StaffManagedBean implements Serializable {
 
     @EJB
     private StaffSessionBeanLocal staffSessionBeanLocal;

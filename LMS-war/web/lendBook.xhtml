@@ -10,10 +10,14 @@
     <ui:define name="content">
 
         <h:form>
-            <p:growl id="growl" showDetail="true"/>  
+            <p:growl id="growl"/>  
             
-            <p:dataTable selectionMode="multiple" selection="#{lendAndReturnManagedBean.selectedBooks}" rowKey="#{book.bookId}" 
-                         resizableColumns="true" var="book" value="#{bookManagedBean.books}"
+            <p:dataTable selectionMode="multiple" 
+                         selection="#{lendAndReturnManagedBean.selectedBooks}" 
+                         rowKey="#{book.bookId}" 
+                         resizableColumns="true" 
+                         var="book" 
+                         value="#{bookManagedBean.books}"
                          style="padding: 10px;"
                          id="bookTable">
                 <f:facet name="header">
@@ -40,8 +44,12 @@
             </p:dataTable>
 
 
-            <p:dataTable selectionMode="single" selection="#{lendAndReturnManagedBean.selectedMember}" rowKey="#{member.memberId}" 
-                         resizableColumns="true" var="member" value="#{memberManagedBean.members}"
+            <p:dataTable selectionMode="single" 
+                         selection="#{lendAndReturnManagedBean.selectedMember}" 
+                         rowKey="#{member.memberId}" 
+                         resizableColumns="true" 
+                         var="member" 
+                         value="#{memberManagedBean.members}"
                          style="padding: 10px;">
                 <f:facet name="header">
                     Members

@@ -13,16 +13,17 @@ import exception.BookNotAvailableException;
 import exception.EntityManagerException;
 import exception.MemberNotFoundException;
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.ejb.EJB;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import static org.primefaces.behavior.confirm.ConfirmBehavior.PropertyKeys.message;
+import org.primefaces.event.SelectEvent;
 
 /**
  *
@@ -48,21 +49,74 @@ public class LendAndReturnManagedBean implements Serializable {
 
     private List<Book> selectedBooks;
     private Member selectedMember;
+    private List<LendAndReturn> lendAndReturns;
+    private LendAndReturn selectedLendAndReturn;
 
-    private String growlMessage;
-
-    public String getGrowlMessage() {
-        return growlMessage;
-    }
-
-    public void setGrowlMessage(String growlMessage) {
-        this.growlMessage = growlMessage;
-    }
-
-    public void saveMessage() {
+    public void saveMessageLendOut() {
         FacesContext context = FacesContext.getCurrentInstance();
 
-        context.addMessage(null, new FacesMessage(selectedBooks.get(0).getTitle() + " has been lent to " + selectedMember.getFirstName() + " " + selectedMember.getLastName()));
+        context.addMessage(null, new FacesMessage(selectedBooks.get(0).getTitle()
+                + " has been lent to "
+                + selectedMember.getFirstName() + " "
+                + selectedMember.getLastName()));
+    }
+
+    public void clearSelected() {
+        this.selectedBooks = null;
+        this.selectedMember = null;
+    }
+
+    public void saveMessageLendFail() {
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        context.addMessage(null, new FacesMessage(
+                selectedBooks.get(0).getTitle() + " is not available."));
+    }
+
+    public void saveMessageFine() {
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        context.addMessage(null, new FacesMessage("The fine will be $"
+                + fineAmount
+                + " if you return today"));
+    }
+
+    public LendAndReturn getSelectedLendAndReturn() {
+        return selectedLendAndReturn;
+    }
+
+    public void setSelectedLendAndReturn(LendAndReturn selectedLendAndReturn) {
+        this.selectedLendAndReturn = selectedLendAndReturn;
+    }
+
+    public void onRowSelectMember(SelectEvent event) {
+        this.setSelectedMember((Member) event.getObject());
+        this.setLendAndReturns(this.selectedMember.getLending()
+                .stream()
+                .filter(l -> l.getReturnDate() == null)
+                .collect(Collectors.toList()));
+    }
+
+    public void lendBook(ActionEvent evt) throws EntityManagerException {
+        try {
+            lendAndReturnSessionBeanLocal.lendBook(selectedMember.getIdentityNo(), selectedBooks.get(0).getIsbn());
+            this.saveMessageLendOut();
+        } catch (BookNotAvailableException ex) {
+            this.saveMessageLendFail();
+        }
+    }
+
+    public void calculateFine() {
+        this.fineAmount = lendAndReturnSessionBeanLocal.calculateFine(selectedLendAndReturn.getLendId());
+        this.saveMessageFine();
+    }
+
+    public List<LendAndReturn> getLendAndReturns() {
+        return lendAndReturns;
+    }
+
+    public void setLendAndReturns(List<LendAndReturn> lendAndReturns) {
+        this.lendAndReturns = lendAndReturns;
     }
 
     public Member getSelectedMember() {
@@ -71,9 +125,29 @@ public class LendAndReturnManagedBean implements Serializable {
 
     public void setSelectedMember(Member selectedMember) {
         this.selectedMember = selectedMember;
+        this.setLendAndReturns(this.selectedMember.getLending()
+                .stream()
+                .filter(l -> l.getReturnDate() == null)
+                .collect(Collectors.toList()));
     }
 
     public LendAndReturnManagedBean() {
+    }
+
+    public LendAndReturn returnBook(ActionEvent evt) {
+        return lendAndReturnSessionBeanLocal.returnBook(lendId);
+    }
+
+    public List<LendAndReturn> retrieveAllLendAndReturnsOfMember(ActionEvent evt) throws MemberNotFoundException {
+        return lendAndReturnSessionBeanLocal.retrieveAllLendAndReturnsOfMember(identityNo);
+    }
+
+    public LendAndReturnSessionBeanLocal getLendAndReturnSessionBeanLocal() {
+        return lendAndReturnSessionBeanLocal;
+    }
+
+    public void setLendAndReturnSessionBeanLocal(LendAndReturnSessionBeanLocal lendAndReturnSessionBeanLocal) {
+        this.lendAndReturnSessionBeanLocal = lendAndReturnSessionBeanLocal;
     }
 
     public List<Book> getSelectedBooks() {
@@ -106,31 +180,6 @@ public class LendAndReturnManagedBean implements Serializable {
 
     public void setIsbn(String isbn) {
         this.isbn = isbn;
-    }
-
-    public LendAndReturn lendBook(ActionEvent evt) throws EntityManagerException, BookNotAvailableException {
-        this.saveMessage();
-        return lendAndReturnSessionBeanLocal.lendBook(selectedMember.getIdentityNo(), selectedBooks.get(0).getIsbn());
-    }
-
-    public BigDecimal calculateFine(ActionEvent evt) {
-        return lendAndReturnSessionBeanLocal.calculateFine(lendId);
-    }
-
-    public LendAndReturn returnBook(ActionEvent evt) {
-        return lendAndReturnSessionBeanLocal.returnBook(lendId);
-    }
-
-    public List<LendAndReturn> retrieveAllLendAndReturnsOfMember(ActionEvent evt) throws MemberNotFoundException {
-        return lendAndReturnSessionBeanLocal.retrieveAllLendAndReturnsOfMember(identityNo);
-    }
-
-    public LendAndReturnSessionBeanLocal getLendAndReturnSessionBeanLocal() {
-        return lendAndReturnSessionBeanLocal;
-    }
-
-    public void setLendAndReturnSessionBeanLocal(LendAndReturnSessionBeanLocal lendAndReturnSessionBeanLocal) {
-        this.lendAndReturnSessionBeanLocal = lendAndReturnSessionBeanLocal;
     }
 
     public Date getLendDate() {

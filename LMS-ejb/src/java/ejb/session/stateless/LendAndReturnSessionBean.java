@@ -82,9 +82,9 @@ public class LendAndReturnSessionBean implements LendAndReturnSessionBeanLocal {
         long daysDiff = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
         System.out.println("Days= " + daysDiff);
 
-        double fineAmt = (daysDiff - 14) * 0.50;
+        double fineAmt = (daysDiff > 14) ? (daysDiff - 14) * 0.50 : 0;
         BigDecimal fine = new BigDecimal(fineAmt);
-
+        System.out.println(fine);
         return fine;
     }
 
