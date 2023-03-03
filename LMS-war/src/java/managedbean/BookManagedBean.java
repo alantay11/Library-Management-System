@@ -8,6 +8,7 @@ package managedbean;
 import ejb.session.stateless.BookSessionBeanLocal;
 import entity.Book;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
@@ -23,13 +24,18 @@ public class BookManagedBean {
     @EJB
     private BookSessionBeanLocal bookSessionBeanLocal;
 
-    private List<Book> allBooks;
+    private List<Book> books;
   
     public BookManagedBean() {
     }
     
+    @PostConstruct
+    public void init() {        
+        this.retrieveAllBooks();
+    }
+    
     public void retrieveAllBooks() {
-        this.allBooks = bookSessionBeanLocal.retrieveAllBooks();
+        this.books = bookSessionBeanLocal.retrieveAllBooks();
     }
 
     public BookSessionBeanLocal getBookSessionBeanLocal() {
@@ -40,12 +46,12 @@ public class BookManagedBean {
         this.bookSessionBeanLocal = bookSessionBeanLocal;
     }
 
-    public List<Book> getAllBooks() {
-        return allBooks;
+    public List<Book> getBooks() {
+        return books;
     }
 
-    public void setAllBooks(List<Book> allBooks) {
-        this.allBooks = allBooks;
+    public void setBooks(List<Book> books) {
+        this.books = books;
     }
 
     

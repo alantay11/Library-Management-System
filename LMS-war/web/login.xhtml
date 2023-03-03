@@ -15,7 +15,7 @@
             <h:outputLabel for="username">Username: </h:outputLabel>
             <h:inputText id="username" value="#{staffManagedBean.username}" /><br/>
             <h:outputLabel for="password">Password: </h:outputLabel>
-            <h:inputText id="password" value="#{staffManagedBean.password}"/><br/>
+            <h:inputSecret id="password" value="#{staffManagedBean.password}"/><br/>
             <h:commandButton value="Submit" 
                              actionListener="#{staffManagedBean.loginStaff}"
                              action="mainMenuLoggedIn.xhtml?faces-redirect=true"/>

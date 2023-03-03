@@ -5,10 +5,13 @@
  */
 package entity;
 
+import enumeration.GenderEnumeration;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,8 +33,8 @@ public class Member implements Serializable {
     private String firstName;
     @Column(nullable = false)
     private String lastName;
-    @Column(nullable = false)
-    private Character gender;
+    @Enumerated(EnumType.STRING)
+    private GenderEnumeration gender;
     @Column(nullable = false)
     private Integer age;
     @Column(nullable = false)
@@ -96,11 +99,11 @@ public class Member implements Serializable {
         this.lastName = lastName;
     }
 
-    public Character getGender() {
+    public GenderEnumeration getGender() {
         return gender;
     }
 
-    public void setGender(Character gender) {
+    public void setGender(GenderEnumeration gender) {
         this.gender = gender;
     }
 

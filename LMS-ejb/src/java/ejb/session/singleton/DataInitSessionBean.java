@@ -11,6 +11,7 @@ import ejb.session.stateless.StaffSessionBeanLocal;
 import entity.Book;
 import entity.Member;
 import entity.Staff;
+import enumeration.GenderEnumeration;
 import exception.EntityManagerException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -112,7 +113,7 @@ public class DataInitSessionBean {
                 Member tony = new Member();
                 tony.setFirstName("Tony");
                 tony.setLastName("Shade");
-                tony.setGender('M');
+                tony.setGender(GenderEnumeration.Male);
                 tony.setAge(31);
                 tony.setIdentityNo("S8900678A");
                 tony.setPhone("83722773");
@@ -122,7 +123,7 @@ public class DataInitSessionBean {
                 Member dewi = new Member();
                 dewi.setFirstName("Dewi");
                 dewi.setLastName("Tan");
-                dewi.setGender('F');
+                dewi.setGender(GenderEnumeration.Female);
                 dewi.setAge(35);
                 dewi.setIdentityNo("S8581028X");
                 dewi.setPhone("94602711");

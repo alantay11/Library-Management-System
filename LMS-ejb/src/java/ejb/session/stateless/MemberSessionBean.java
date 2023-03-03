@@ -6,8 +6,10 @@
 package ejb.session.stateless;
 
 import entity.Member;
+import enumeration.GenderEnumeration;
 import exception.EntityManagerException;
 import exception.MemberNotFoundException;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -37,10 +39,9 @@ public class MemberSessionBean implements MemberSessionBeanLocal {
         }
     }
 
-    
     // Use Case 2, don't know the input format yet
     @Override
-    public Member registerMember(String firstName, String lastName, Character gender,
+    public Member registerMember(String firstName, String lastName, GenderEnumeration gender,
             Integer age, String identityNo, String phone, String address) throws EntityManagerException {
         try {
             Member member = new Member();
@@ -53,7 +54,7 @@ public class MemberSessionBean implements MemberSessionBeanLocal {
             member.setAddress(address);
             return createMember(member);
         } catch (EntityManagerException ex) {
-            throw ex; 
+            throw ex;
         }
     }
 
@@ -61,17 +62,19 @@ public class MemberSessionBean implements MemberSessionBeanLocal {
     public Member retrieveMemberwithID(String id) throws MemberNotFoundException {
         Query query = em.createQuery("SELECT m FROM Member m WHERE m.identityNo = :id");
         query.setParameter("id", id);
-        
-         try
-        {
-            Member member = (Member)query.getSingleResult();
+
+        try {
+            Member member = (Member) query.getSingleResult();
             member.getLending().size();
             return member;
-        }
-        catch(NoResultException | NonUniqueResultException ex)
-        {
+        } catch (NoResultException | NonUniqueResultException ex) {
             throw new MemberNotFoundException("Member with ID: " + id + " does not exist!");
         }
+    }
+
+    @Override
+    public List<Member> retrieveAllMembers() {
+        return em.createQuery("SELECT m FROM Member m").getResultList();
     }
 
 }

@@ -6,7 +6,9 @@
 package managedbean;
 
 import ejb.session.stateless.LendAndReturnSessionBeanLocal;
+import entity.Book;
 import entity.LendAndReturn;
+import entity.Member;
 import exception.BookNotAvailableException;
 import exception.EntityManagerException;
 import exception.MemberNotFoundException;
@@ -17,7 +19,10 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import static org.primefaces.behavior.confirm.ConfirmBehavior.PropertyKeys.message;
 
 /**
  *
@@ -41,7 +46,42 @@ public class LendAndReturnManagedBean implements Serializable {
     private Long bookId;
     private String isbn;
 
+    private List<Book> selectedBooks;
+    private Member selectedMember;
+
+    private String growlMessage;
+
+    public String getGrowlMessage() {
+        return growlMessage;
+    }
+
+    public void setGrowlMessage(String growlMessage) {
+        this.growlMessage = growlMessage;
+    }
+
+    public void saveMessage() {
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        context.addMessage(null, new FacesMessage(selectedBooks.get(0).getTitle() + " has been lent to " + selectedMember.getFirstName() + " " + selectedMember.getLastName()));
+    }
+
+    public Member getSelectedMember() {
+        return selectedMember;
+    }
+
+    public void setSelectedMember(Member selectedMember) {
+        this.selectedMember = selectedMember;
+    }
+
     public LendAndReturnManagedBean() {
+    }
+
+    public List<Book> getSelectedBooks() {
+        return selectedBooks;
+    }
+
+    public void setSelectedBooks(List<Book> selectedBooks) {
+        this.selectedBooks = selectedBooks;
     }
 
     public Long getLendId() {
@@ -69,7 +109,8 @@ public class LendAndReturnManagedBean implements Serializable {
     }
 
     public LendAndReturn lendBook(ActionEvent evt) throws EntityManagerException, BookNotAvailableException {
-        return lendAndReturnSessionBeanLocal.lendBook(identityNo, isbn);
+        this.saveMessage();
+        return lendAndReturnSessionBeanLocal.lendBook(selectedMember.getIdentityNo(), selectedBooks.get(0).getIsbn());
     }
 
     public BigDecimal calculateFine(ActionEvent evt) {

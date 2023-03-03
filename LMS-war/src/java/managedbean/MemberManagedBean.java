@@ -7,8 +7,11 @@ package managedbean;
 
 import ejb.session.stateless.MemberSessionBeanLocal;
 import entity.Member;
+import enumeration.GenderEnumeration;
 import exception.EntityManagerException;
 import exception.MemberNotFoundException;
+import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
@@ -27,13 +30,33 @@ public class MemberManagedBean {
 
     private String firstName;
     private String lastName;
-    private Character gender;
+    private GenderEnumeration gender;
+    private GenderEnumeration[] genderList;
     private Integer age;
     private String identityNo;
     private String phone;
     private String address;
+    
+    private List<Member> members;
 
     public MemberManagedBean() {
+    }
+    
+    @PostConstruct
+    public void init() {        
+        this.members = memberSessionBeanLocal.retrieveAllMembers();
+    }
+
+    public List<Member> getMembers() {
+        return members;
+    }
+
+    public void setMembers(List<Member> members) {
+        this.members = members;
+    }
+
+    public GenderEnumeration[] getGenderList() {
+        return GenderEnumeration.values();
     }
 
     public Member registerMember(ActionEvent evt) throws EntityManagerException {
@@ -69,11 +92,11 @@ public class MemberManagedBean {
         this.lastName = lastName;
     }
 
-    public Character getGender() {
+    public GenderEnumeration getGender() {
         return gender;
     }
 
-    public void setGender(Character gender) {
+    public void setGender(GenderEnumeration gender) {
         this.gender = gender;
     }
 

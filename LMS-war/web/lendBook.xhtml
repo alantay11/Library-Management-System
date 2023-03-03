@@ -4,25 +4,81 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="./layout/defaultLoggedIn.xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:f="http://xmlns.jcp.org/jsf/core">
+                xmlns:f="http://xmlns.jcp.org/jsf/core"      
+                xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="content">
 
         <h:form>
-            <h:commandButton value="View books" 
-                             actionListener="#{bookManagedBean.retrieveAllBooks}"/>
+            <p:growl id="growl" showDetail="true"/>  
             
-            <ui:repeat var="book" value="#{bookManagedBean.allBooks}">
-                <li>#{book.title} - #{book.isbn} - #{book.author} - Available: #{book.available}</li>
-            </ui:repeat>
+            <p:dataTable selectionMode="multiple" selection="#{lendAndReturnManagedBean.selectedBooks}" rowKey="#{book.bookId}" 
+                         resizableColumns="true" var="book" value="#{bookManagedBean.books}"
+                         style="padding: 10px;"
+                         id="bookTable">
+                <f:facet name="header">
+                    Books
+                </f:facet>
+                <p:column headerText="ID" style="width:5%">
+                    <h:outputText value="#{book.bookId}" />
+                </p:column>
 
-            <h:outputLabel for="identityNo">Member's Identity No: </h:outputLabel>
-            <h:inputText id="identityNo" value="#{lendAndReturnManagedBean.identityNo}" /><br/>
-            <h:outputLabel for="isbn">ISBN: </h:outputLabel>
-            <h:inputText id="isbn" value="#{lendAndReturnManagedBean.isbn}"/><br/>
+                <p:column headerText="Title" style="width:30%">
+                    <h:outputText value="#{book.title}" />
+                </p:column>
 
-            <h:commandButton value="Borrow book" 
-                             actionListener="#{lendAndReturnManagedBean.lendBook}"/>
+                <p:column headerText="ISBN" style="width:30%">
+                    <h:outputText value="#{book.isbn}" />
+                </p:column>
+
+                <p:column headerText="Author" style="width:20%">
+                    <h:outputText value="#{book.author}" />
+                </p:column>
+                <p:column headerText="Available" style="width:5%">
+                    <h:outputText value="#{book.available ? '✓' : 'X'}"/>
+                </p:column>
+            </p:dataTable>
+
+
+            <p:dataTable selectionMode="single" selection="#{lendAndReturnManagedBean.selectedMember}" rowKey="#{member.memberId}" 
+                         resizableColumns="true" var="member" value="#{memberManagedBean.members}"
+                         style="padding: 10px;">
+                <f:facet name="header">
+                    Members
+                </f:facet>
+                <p:column headerText="ID" style="width:5%">
+                    <h:outputText value="#{member.memberId}" />
+                </p:column>
+
+                <p:column headerText="First Name" style="width:5%">
+                    <h:outputText value="#{member.firstName}" />
+                </p:column>
+
+                <p:column headerText="Last Name" style="width:5%">
+                    <h:outputText value="#{member.lastName}" />
+                </p:column>
+
+                <p:column headerText="Gender" style="width:5%">
+                    <h:outputText value="#{member.gender}" />
+                </p:column>
+                <p:column headerText="Identity No" style="width:5%">
+                    <h:outputText value="#{member.identityNo}"/>
+                </p:column>
+
+                <p:column headerText="Phone" style="width:5%">
+                    <h:outputText value="#{member.phone}" />
+                </p:column>
+
+                <p:column headerText="Address" style="width:5%">
+                    <h:outputText value="#{member.address}" />
+                </p:column>
+            </p:dataTable>
+
+            <p:commandButton value="Borrow book" 
+                             actionListener="#{lendAndReturnManagedBean.lendBook}"
+                             action="#{bookManagedBean.retrieveAllBooks}"
+                             update="@form"
+                             style="margin-left: 10px;"/>
         </h:form>
     </ui:define>
 
