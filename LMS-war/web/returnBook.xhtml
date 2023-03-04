@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./layout/defaultLoggedIn.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+        <h:form>
+            <p:growl id="growl"/>  
+
+            <p:panelGrid columns="2">
+                <f:facet name="header">
+                    Return Book
+                </f:facet>
+
+                <h:outputLabel for="title">Title: </h:outputLabel>
+                <h:outputText id="title" value="#{lendAndReturnManagedBean.selectedLendAndReturn.book.title}"/>
+                <h:outputLabel for="isbn">ISBN: </h:outputLabel>
+                <h:outputText id="isbn" value="#{lendAndReturnManagedBean.selectedLendAndReturn.book.isbn}"/>
+                <h:outputLabel for="author">Author: </h:outputLabel>
+                <h:outputText id="author" value="#{lendAndReturnManagedBean.selectedLendAndReturn.book.author}"/>               
+
+                <h:outputLabel for="fineAmount">If you return now, the fine will be: </h:outputLabel>
+                <h:outputText id="fineAmount" value="#{lendAndReturnManagedBean.fineAmount}"/>
+                <h:outputLabel for="paymentDetails">Enter payment details: </h:outputLabel>
+                <p:inputText id="paymentDetails" />
+
+            </p:panelGrid>
+
+            <p:commandButton value="Return" 
+                             actionListener="#{lendAndReturnManagedBean.returnBook}"
+                             update="@form"/>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

@@ -15,6 +15,8 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 /**
@@ -36,14 +38,14 @@ public class MemberManagedBean {
     private String identityNo;
     private String phone;
     private String address;
-    
+
     private List<Member> members;
 
     public MemberManagedBean() {
     }
-    
+
     @PostConstruct
-    public void init() {        
+    public void init() {
         this.members = memberSessionBeanLocal.retrieveAllMembers();
     }
 
@@ -59,9 +61,15 @@ public class MemberManagedBean {
         return GenderEnumeration.values();
     }
 
-    public Member registerMember(ActionEvent evt) throws EntityManagerException {
+    public void registerMember(ActionEvent evt) throws EntityManagerException {
+        memberSessionBeanLocal.registerMember(firstName, lastName, gender, age, identityNo, phone, address);
+        this.saveMessageRegisterMember(evt);
+    }
 
-        return memberSessionBeanLocal.registerMember(firstName, lastName, gender, age, identityNo, phone, address);
+    public void saveMessageRegisterMember(ActionEvent evt) {
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        context.addMessage(null, new FacesMessage(firstName + " " + lastName + " registered"));
     }
 
     private Member retrieveMemberwithID(ActionEvent evt) throws MemberNotFoundException {

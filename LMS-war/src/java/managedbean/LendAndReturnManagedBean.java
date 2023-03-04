@@ -51,6 +51,8 @@ public class LendAndReturnManagedBean implements Serializable {
     private Member selectedMember;
     private List<LendAndReturn> lendAndReturns;
     private LendAndReturn selectedLendAndReturn;
+    
+    private String message;
 
     public void saveMessageLendOut() {
         FacesContext context = FacesContext.getCurrentInstance();
@@ -65,20 +67,12 @@ public class LendAndReturnManagedBean implements Serializable {
         this.selectedBooks = null;
         this.selectedMember = null;
     }
-
-    public void saveMessageLendFail() {
+    
+    public void saveMessage() {
         FacesContext context = FacesContext.getCurrentInstance();
 
-        context.addMessage(null, new FacesMessage(
-                selectedBooks.get(0).getTitle() + " is not available."));
-    }
-
-    public void saveMessageFine() {
-        FacesContext context = FacesContext.getCurrentInstance();
-
-        context.addMessage(null, new FacesMessage("The fine will be $"
-                + fineAmount
-                + " if you return today"));
+        context.addMessage(null, new FacesMessage(this.message));
+        context.getExternalContext().getFlash().setKeepMessages(true);
     }
 
     public LendAndReturn getSelectedLendAndReturn() {
@@ -102,13 +96,21 @@ public class LendAndReturnManagedBean implements Serializable {
             lendAndReturnSessionBeanLocal.lendBook(selectedMember.getIdentityNo(), selectedBooks.get(0).getIsbn());
             this.saveMessageLendOut();
         } catch (BookNotAvailableException ex) {
-            this.saveMessageLendFail();
+            this.message = selectedBooks.get(0).getTitle() + " is not available.";
+            this.saveMessage();
         }
     }
 
     public void calculateFine() {
         this.fineAmount = lendAndReturnSessionBeanLocal.calculateFine(selectedLendAndReturn.getLendId());
-        this.saveMessageFine();
+        this.message = "The fine will be $" + fineAmount + " if you return today";
+        this.saveMessage();
+    }
+
+    public void returnBook(ActionEvent evt) {
+        lendAndReturnSessionBeanLocal.returnBook(selectedLendAndReturn.getLendId());
+        this.message = selectedLendAndReturn.getBook().getTitle() + " has been returned";
+        this.saveMessage();
     }
 
     public List<LendAndReturn> getLendAndReturns() {
@@ -129,13 +131,6 @@ public class LendAndReturnManagedBean implements Serializable {
                 .stream()
                 .filter(l -> l.getReturnDate() == null)
                 .collect(Collectors.toList()));
-    }
-
-    public LendAndReturnManagedBean() {
-    }
-
-    public LendAndReturn returnBook(ActionEvent evt) {
-        return lendAndReturnSessionBeanLocal.returnBook(lendId);
     }
 
     public List<LendAndReturn> retrieveAllLendAndReturnsOfMember(ActionEvent evt) throws MemberNotFoundException {

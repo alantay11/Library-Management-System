@@ -38,20 +38,20 @@
                                     </h:outputText>
                                 </p:column>-->
 
-                <!--                <p:column headerText="Fine Amount" style="width:5%">
-                                    <h:outputText value="#add{lendAndReturn.fineAmount}" />
-                                </p:column>-->
+                <p:column headerText="Fine Paid" style="width:5%">
+                    <h:outputText value="#{lendAndReturn.fineAmount}" />
+                </p:column>
                 <p:column headerText="Book ID" style="width:5%">
                     <h:outputText value="#{lendAndReturn.bookId}"/>
                 </p:column>
             </p:dataTable>
 
-            <p:commandButton value="Calculate fine" 
+            <p:commandButton value="Return Book" 
                              actionListener="#{lendAndReturnManagedBean.calculateFine}"
-                             update="growl"
+                             action="returnBook.xhtml?faces-redirect=true"
                              style="margin-left: 10px;"                             
-                             />
-
+                             >
+            </p:commandButton>   
         </h:form>
     </ui:define>
 </ui:composition>

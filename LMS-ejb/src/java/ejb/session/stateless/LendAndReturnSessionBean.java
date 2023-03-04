@@ -91,19 +91,14 @@ public class LendAndReturnSessionBean implements LendAndReturnSessionBeanLocal {
     // Use Case 5
     @Override
     public LendAndReturn returnBook(long lendAndReturnId) {
-        LendAndReturn lAR = em.find(LendAndReturn.class, lendAndReturnId);
-        long diff = (new Date(System.currentTimeMillis())).getTime() - lAR.getLendDate().getTime();
+        LendAndReturn lendAndReturn = em.find(LendAndReturn.class, lendAndReturnId);
+        BigDecimal fine = calculateFine(lendAndReturnId);
 
-        long daysDiff = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
-        System.out.println("Days= " + daysDiff);
-
-        double fineAmt = (daysDiff - 14) * 0.50;
-        BigDecimal fine = new BigDecimal(fineAmt);
-
-        lAR.setReturnDate(new Date(System.currentTimeMillis()));
-        lAR.setFineAmount(fine);
+        lendAndReturn.setReturnDate(new Date(System.currentTimeMillis()));
+        lendAndReturn.setFineAmount(fine);
+        lendAndReturn.getBook().setAvailable(true);
         em.flush();
-        return lAR;
+        return lendAndReturn;
     }
 
     @Override
