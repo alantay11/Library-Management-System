@@ -10,10 +10,14 @@ import entity.Staff;
 import exception.EntityManagerException;
 import exception.InvalidLoginException;
 import exception.StaffNotFoundException;
+import java.io.IOException;
 import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 /**
@@ -31,8 +35,7 @@ public class StaffManagedBean implements Serializable {
     private String username;
     private String password;
 
-    public StaffManagedBean() {
-    }
+    private String message;
 
     public Staff createStaff(ActionEvent evt) throws InvalidLoginException, EntityManagerException {
         Staff staff = new Staff();
@@ -43,8 +46,26 @@ public class StaffManagedBean implements Serializable {
         return staffSessionBeanLocal.createStaff(staff);
     }
 
-    public Staff loginStaff(ActionEvent evt) throws InvalidLoginException {
-        return staffSessionBeanLocal.loginStaff(username, password);
+    public void saveMessage() {
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        context.addMessage(null, new FacesMessage(this.message));
+        context.getExternalContext().getFlash().setKeepMessages(true);
+    }
+
+    public void loginStaff(ActionEvent evt) throws IOException {
+        try {
+            Staff staff = retrieveStaffByUsername(evt);
+            this.message = "Welcome " + staff.getFirstName() + " " + staff.getLastName();
+            staffSessionBeanLocal.loginStaff(username, password);
+            FacesContext.getCurrentInstance().getExternalContext().redirect("viewAllMembers.xhtml");
+        } catch (StaffNotFoundException ex) {
+            this.message = "This staff member doesn't exist!";
+        } catch (InvalidLoginException ex) {
+            this.message = "Your username or password is wrong";
+        } finally {
+            this.saveMessage();
+        }
     }
 
     private Staff retrieveStaffByUsername(ActionEvent evt) throws StaffNotFoundException {

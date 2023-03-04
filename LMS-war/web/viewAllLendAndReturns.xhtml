@@ -50,7 +50,7 @@
                              actionListener="#{lendAndReturnManagedBean.calculateFine}"
                              action="returnBook.xhtml?faces-redirect=true"
                              style="margin-left: 10px;"                             
-                             >
+                             rendered="#{not empty lendAndReturnManagedBean.lendAndReturns}">
             </p:commandButton>   
         </h:form>
     </ui:define>

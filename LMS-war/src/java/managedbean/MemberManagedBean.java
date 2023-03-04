@@ -41,9 +41,6 @@ public class MemberManagedBean {
 
     private List<Member> members;
 
-    public MemberManagedBean() {
-    }
-
     @PostConstruct
     public void init() {
         this.members = memberSessionBeanLocal.retrieveAllMembers();

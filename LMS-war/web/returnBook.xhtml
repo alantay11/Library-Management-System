@@ -27,12 +27,12 @@
                 <h:outputText id="fineAmount" value="#{lendAndReturnManagedBean.fineAmount}"/>
                 <h:outputLabel for="paymentDetails">Enter payment details: </h:outputLabel>
                 <p:inputText id="paymentDetails" />
-
+                <p:commandButton value="Return" 
+                                 actionListener="#{lendAndReturnManagedBean.returnBook}"
+                                 update="@form"/>
             </p:panelGrid>
 
-            <p:commandButton value="Return" 
-                             actionListener="#{lendAndReturnManagedBean.returnBook}"
-                             update="@form"/>
+
         </h:form>
     </ui:define>
 

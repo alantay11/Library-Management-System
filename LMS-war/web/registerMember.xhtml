@@ -20,29 +20,29 @@
                     Register New Member
                 </f:facet>
                 <h:outputLabel for="firstName">First Name: </h:outputLabel>
-                <p:inputText id="firstName" value="#{memberManagedBean.firstName}" />
+                <p:inputText id="firstName" value="#{memberManagedBean.firstName}" required="true" />
                 <h:outputLabel for="lastName">Last Name: </h:outputLabel>
-                <p:inputText id="lastName" value="#{memberManagedBean.lastName}"/>
+                <p:inputText id="lastName" value="#{memberManagedBean.lastName}" required="true"/>
 
                 Gender: <p:selectOneMenu value="#{memberManagedBean.gender}">
                     <f:selectItems value="#{memberManagedBean.genderList}" />
                 </p:selectOneMenu> 
 
                 <h:outputLabel for="age">Age: </h:outputLabel>
-                <p:inputText id="age" value="#{memberManagedBean.age}"/>
+                <p:inputText id="age" value="#{memberManagedBean.age}" required="true"/>
                 <h:outputLabel for="identityNo">Identity No: </h:outputLabel>
-                <p:inputText id="identityNo" value="#{memberManagedBean.identityNo}"/>
+                <p:inputText id="identityNo" value="#{memberManagedBean.identityNo}" required="true"/>
                 <h:outputLabel for="phone">Phone no: </h:outputLabel>
-                <p:inputText id="phone" value="#{memberManagedBean.phone}"/>
+                <p:inputText id="phone" value="#{memberManagedBean.phone}" required="true"/>
                 <h:outputLabel for="address">Address: </h:outputLabel>
-                <p:inputText id="address" value="#{memberManagedBean.address}"/>
-
+                <p:inputText id="address" value="#{memberManagedBean.address}" required="true"/>
+                <p:commandButton value="Submit" 
+                                 actionListener="#{memberManagedBean.registerMember}"
+                                 update="@form"
+                                 />
             </p:panelGrid>
 
-            <p:commandButton value="Submit" 
-                             actionListener="#{memberManagedBean.registerMember}"
-                             update="@form"
-                             />
+
         </h:form>
     </ui:define>
 

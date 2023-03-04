@@ -3,6 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
     <h:head>
@@ -11,21 +12,22 @@
     </h:head>
 
     <h:body>
+        <h:form> 
+            <p:menubar>
+                <p:menuitem value="Register Member" action="registerMember.xhtml?faces-redirect=true"  />
+                <p:menuitem value="Lend a book" action="lendBook.xhtml?faces-redirect=true"  />
+                <p:menuitem value="Loan Management" action="viewAllMembers.xhtml?faces-redirect=true"  />
 
-        <p:layout>
-            <p:layoutUnit position="west"
-                          size="250" minSize="80" maxSize="600">
-                <a href="login.xhtml">Logout</a><br />
-                <a href="registerMember.xhtml">Register member</a><br />
-                <a href="lendBook.xhtml">Lend a book</a><br />
-                <a href="viewAllMembers.xhtml">View all lend and returns of a member</a><br /> 
-                <a href="viewFineAmount.xhtml">View fine amount</a><br />
-                <a href="returnBook.xhtml">Return a book</a>
-            </p:layoutUnit>
-            <p:layoutUnit position="center">
-                <ui:insert name="content"></ui:insert>
-            </p:layoutUnit>
-        </p:layout>
+                <f:facet name="options">
+                    <p:commandButton value="Logout" 
+                                     action="login.xhtml?faces-redirect=true" />
+                </f:facet>
+            </p:menubar>
+        </h:form> 
+
+        <p:layoutUnit position="center">
+            <ui:insert name="content"></ui:insert>
+        </p:layoutUnit>
 
     </h:body>
 

@@ -51,23 +51,14 @@ public class LendAndReturnManagedBean implements Serializable {
     private Member selectedMember;
     private List<LendAndReturn> lendAndReturns;
     private LendAndReturn selectedLendAndReturn;
-    
+
     private String message;
-
-    public void saveMessageLendOut() {
-        FacesContext context = FacesContext.getCurrentInstance();
-
-        context.addMessage(null, new FacesMessage(selectedBooks.get(0).getTitle()
-                + " has been lent to "
-                + selectedMember.getFirstName() + " "
-                + selectedMember.getLastName()));
-    }
 
     public void clearSelected() {
         this.selectedBooks = null;
         this.selectedMember = null;
     }
-    
+
     public void saveMessage() {
         FacesContext context = FacesContext.getCurrentInstance();
 
@@ -94,7 +85,8 @@ public class LendAndReturnManagedBean implements Serializable {
     public void lendBook(ActionEvent evt) throws EntityManagerException {
         try {
             lendAndReturnSessionBeanLocal.lendBook(selectedMember.getIdentityNo(), selectedBooks.get(0).getIsbn());
-            this.saveMessageLendOut();
+            this.message = selectedBooks.get(0).getTitle() + " has been lent to " + selectedMember.getFirstName() + " " + selectedMember.getLastName();
+            this.saveMessage();
         } catch (BookNotAvailableException ex) {
             this.message = selectedBooks.get(0).getTitle() + " is not available.";
             this.saveMessage();
