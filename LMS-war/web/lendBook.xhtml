@@ -9,7 +9,7 @@
 
     <ui:define name="content">
 
-        <h:form>
+        <h:form id="form">
             <p:growl id="growl"/>  
 
             <p:dataTable selectionMode="single" 
@@ -20,22 +20,24 @@
                          value="#{bookManagedBean.books}"
                          style="padding: 10px;"
                          id="bookTable">
+                <p:ajax event="rowSelect" update="form:borrowBook" />
+
                 <f:facet name="header">
                     Books
                 </f:facet>
 
-                <p:column headerText="Title" style="width:30%" filterBy="#{book.title}" filterMatchMode="contains">
+                <p:column headerText="Title" style="width:30%" filterBy="#{book.title}" filterMatchMode="contains" sortBy="#{book.title}">
                     <h:outputText value="#{book.title}" />
                 </p:column>
 
-                <p:column headerText="ISBN" style="width:30%" filterBy="#{book.isbn}" filterMatchMode="contains">
+                <p:column headerText="ISBN" style="width:30%" filterBy="#{book.isbn}" filterMatchMode="contains" sortBy="#{book.isbn}">
                     <h:outputText value="#{book.isbn}" />
                 </p:column>
 
-                <p:column headerText="Author" style="width:20%" filterBy="#{book.author}" filterMatchMode="contains">
+                <p:column headerText="Author" style="width:20%" filterBy="#{book.author}" filterMatchMode="contains" sortBy="#{book.author}">
                     <h:outputText value="#{book.author}" />
                 </p:column>
-                
+
                 <p:column headerText="Available" style="width:5%">
                     <h:outputText value="#{book.available ? '✓' : 'X'}"/>
                 </p:column>
@@ -49,37 +51,40 @@
                          var="member" 
                          value="#{memberManagedBean.members}"
                          style="padding: 10px;">
+                <p:ajax event="rowSelect" update="form:borrowBook" />
+
                 <f:facet name="header">
                     Members
                 </f:facet>
-                <p:column headerText="First Name" style="width:10%" filterBy="#{member.firstName}" filterMatchMode="contains">
+                <p:column headerText="First Name" style="width:10%" filterBy="#{member.firstName}" filterMatchMode="contains" sortBy="#{member.firstName}">
                     <h:outputText value="#{member.firstName}" />
                 </p:column>
-                
-                <p:column headerText="Last Name" style="width:10%" filterBy="#{member.lastName}" filterMatchMode="contains">
+
+                <p:column headerText="Last Name" style="width:10%" filterBy="#{member.lastName}" filterMatchMode="contains" sortBy="#{member.lastName}">
                     <h:outputText value="#{member.lastName}" />
                 </p:column>
 
-                <p:column headerText="Gender" style="width:3%" >
+                <p:column headerText="Gender" style="width:3%"  sortBy="#{member.gender}">
                     <h:outputText value="#{member.gender}" />
                 </p:column>
-                
-                <p:column headerText="Identity No" style="width:10%" filterBy="#{member.identityNo}" filterMatchMode="contains">
+                <p:column headerText="Identity No" style="width:10%" filterBy="#{member.identityNo}" filterMatchMode="contains" sortBy="#{member.identityNo}">
                     <h:outputText value="#{member.identityNo}"/>
                 </p:column>
 
-                <p:column headerText="Phone" style="width:10%" filterBy="#{member.phone}" filterMatchMode="contains">
+                <p:column headerText="Phone" style="width:10%" filterBy="#{member.phone}" filterMatchMode="contains" sortBy="#{member.phone}">
                     <h:outputText value="#{member.phone}" />
                 </p:column>
 
-                <p:column headerText="Address" style="width:10%" filterBy="#{member.address}" filterMatchMode="contains">
+                <p:column headerText="Address" style="width:10%" filterBy="#{member.address}" filterMatchMode="contains" sortBy="#{member.address}">
                     <h:outputText value="#{member.address}" />
                 </p:column>
             </p:dataTable>
 
             <p:commandButton value="Borrow book" 
+                             id="borrowBook"
                              actionListener="#{lendAndReturnManagedBean.lendBook}"
                              action="#{bookManagedBean.retrieveAllBooks}"
+                             disabled="#{lendAndReturnManagedBean.selectedBook == null or lendAndReturnManagedBean.selectedMember == null}"
                              update="@form"
                              style="margin-left: 10px;"/>
         </h:form>

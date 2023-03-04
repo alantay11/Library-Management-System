@@ -26,26 +26,26 @@
                     Select A Member
                 </f:facet>
 
-                <p:column headerText="First Name" style="width:10%" filterBy="#{member.firstName}" filterMatchMode="contains">
+                <p:column headerText="First Name" style="width:10%" filterBy="#{member.firstName}" filterMatchMode="contains" sortBy="#{member.firstName}">
                     <h:outputText value="#{member.firstName}" />
                 </p:column>
 
-                <p:column headerText="Last Name" style="width:10%" filterBy="#{member.lastName}" filterMatchMode="contains">
+                <p:column headerText="Last Name" style="width:10%" filterBy="#{member.lastName}" filterMatchMode="contains" sortBy="#{member.lastName}">
                     <h:outputText value="#{member.lastName}" />
                 </p:column>
 
-                <p:column headerText="Gender" style="width:3%" >
+                <p:column headerText="Gender" style="width:3%"  sortBy="#{member.gender}">
                     <h:outputText value="#{member.gender}" />
                 </p:column>
-                <p:column headerText="Identity No" style="width:10%" filterBy="#{member.identityNo}" filterMatchMode="contains">
+                <p:column headerText="Identity No" style="width:10%" filterBy="#{member.identityNo}" filterMatchMode="contains" sortBy="#{member.identityNo}">
                     <h:outputText value="#{member.identityNo}"/>
                 </p:column>
 
-                <p:column headerText="Phone" style="width:10%" filterBy="#{member.phone}" filterMatchMode="contains">
+                <p:column headerText="Phone" style="width:10%" filterBy="#{member.phone}" filterMatchMode="contains" sortBy="#{member.phone}">
                     <h:outputText value="#{member.phone}" />
                 </p:column>
 
-                <p:column headerText="Address" style="width:10%" filterBy="#{member.address}" filterMatchMode="contains">
+                <p:column headerText="Address" style="width:10%" filterBy="#{member.address}" filterMatchMode="contains" sortBy="#{member.address}">
                     <h:outputText value="#{member.address}" />
                 </p:column>
             </p:dataTable>
