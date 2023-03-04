@@ -13,6 +13,7 @@
 
     <ui:define name="content">
         <h:form>
+            <p:messages id="msgs" showDetail="false" />
             <p:growl id="growl"/>  
 
             <p:panelGrid columns="2">
@@ -20,29 +21,27 @@
                     Register New Member
                 </f:facet>
                 <h:outputLabel for="firstName">First Name: </h:outputLabel>
-                <p:inputText id="firstName" value="#{memberManagedBean.firstName}" required="true" />
+                <p:inputText id="firstName" value="#{memberManagedBean.firstName}" required="true" label="First Name"/>
                 <h:outputLabel for="lastName">Last Name: </h:outputLabel>
-                <p:inputText id="lastName" value="#{memberManagedBean.lastName}" required="true"/>
+                <p:inputText id="lastName" value="#{memberManagedBean.lastName}" required="true" label="Last Name"/>
 
                 Gender: <p:selectOneMenu value="#{memberManagedBean.gender}">
                     <f:selectItems value="#{memberManagedBean.genderList}" />
                 </p:selectOneMenu> 
 
                 <h:outputLabel for="age">Age: </h:outputLabel>
-                <p:inputText id="age" value="#{memberManagedBean.age}" required="true"/>
+                <p:inputText id="age" value="#{memberManagedBean.age}" required="true" label="Age"/>
                 <h:outputLabel for="identityNo">Identity No: </h:outputLabel>
-                <p:inputText id="identityNo" value="#{memberManagedBean.identityNo}" required="true"/>
+                <p:inputText id="identityNo" value="#{memberManagedBean.identityNo}" required="true" label="Identity No"/>
                 <h:outputLabel for="phone">Phone no: </h:outputLabel>
-                <p:inputText id="phone" value="#{memberManagedBean.phone}" required="true"/>
+                <p:inputText id="phone" value="#{memberManagedBean.phone}" required="true" label="Phone no"/>
                 <h:outputLabel for="address">Address: </h:outputLabel>
-                <p:inputText id="address" value="#{memberManagedBean.address}" required="true"/>
+                <p:inputText id="address" value="#{memberManagedBean.address}" required="true" label="Address"/>
                 <p:commandButton value="Submit" 
                                  actionListener="#{memberManagedBean.registerMember}"
                                  update="@form"
                                  />
             </p:panelGrid>
-
-
         </h:form>
     </ui:define>
 
