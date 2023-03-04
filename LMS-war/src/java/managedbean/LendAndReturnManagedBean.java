@@ -57,6 +57,7 @@ public class LendAndReturnManagedBean implements Serializable {
     public void clearSelected() {
         this.selectedBooks = null;
         this.selectedMember = null;
+        this.lendAndReturns = null;
     }
 
     public void saveMessage() {

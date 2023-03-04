@@ -46,25 +46,25 @@ public class StaffManagedBean implements Serializable {
         return staffSessionBeanLocal.createStaff(staff);
     }
 
-    public void saveMessage() {
+    public void saveMessage(FacesMessage.Severity severity) {
         FacesContext context = FacesContext.getCurrentInstance();
 
-        context.addMessage(null, new FacesMessage(this.message));
+        context.addMessage(null, new FacesMessage(severity, this.message, null));
         context.getExternalContext().getFlash().setKeepMessages(true);
     }
 
     public void loginStaff(ActionEvent evt) throws IOException {
         try {
             Staff staff = retrieveStaffByUsername(evt);
-            this.message = "Welcome " + staff.getFirstName() + " " + staff.getLastName();
+            //this.message = "Welcome " + staff.getFirstName() + " " + staff.getLastName();
             staffSessionBeanLocal.loginStaff(username, password);
             FacesContext.getCurrentInstance().getExternalContext().redirect("viewAllMembers.xhtml");
         } catch (StaffNotFoundException ex) {
             this.message = "This staff member doesn't exist!";
+            this.saveMessage(FacesMessage.SEVERITY_ERROR);
         } catch (InvalidLoginException ex) {
             this.message = "Your username or password is wrong";
-        } finally {
-            this.saveMessage();
+            this.saveMessage(FacesMessage.SEVERITY_ERROR);
         }
     }
 

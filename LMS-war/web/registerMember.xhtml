@@ -8,40 +8,42 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="content">
-        Register Member
-    </ui:define>
-
-    <ui:define name="content">
         <h:form>
-            <p:messages id="msgs" showDetail="false" />
-            <p:growl id="growl"/>  
-
-            <p:panelGrid columns="2">
-                <f:facet name="header">
-                    Register New Member
-                </f:facet>
-                <h:outputLabel for="firstName">First Name: </h:outputLabel>
+            
+            <p:panel header="Register New Member">
+                <p:growl id="growl" globalOnly="true"/>  
+                
+                <h:panelGrid id="grid" columns="3" cellpadding="5"> 
+                    <h:outputLabel for="firstName">First Name: </h:outputLabel>
                 <p:inputText id="firstName" value="#{memberManagedBean.firstName}" required="true" label="First Name"/>
+                <p:message for="firstName" />
                 <h:outputLabel for="lastName">Last Name: </h:outputLabel>
                 <p:inputText id="lastName" value="#{memberManagedBean.lastName}" required="true" label="Last Name"/>
+                <p:message for="lastName" />
 
-                Gender: <p:selectOneMenu value="#{memberManagedBean.gender}">
+                Gender: <p:selectOneMenu value="#{memberManagedBean.gender}" id="gender">
                     <f:selectItems value="#{memberManagedBean.genderList}" />
                 </p:selectOneMenu> 
+                 <p:message for="gender" />
 
                 <h:outputLabel for="age">Age: </h:outputLabel>
                 <p:inputText id="age" value="#{memberManagedBean.age}" required="true" label="Age"/>
+                 <p:message for="age" />
                 <h:outputLabel for="identityNo">Identity No: </h:outputLabel>
                 <p:inputText id="identityNo" value="#{memberManagedBean.identityNo}" required="true" label="Identity No"/>
+                 <p:message for="identityNo" />
                 <h:outputLabel for="phone">Phone no: </h:outputLabel>
                 <p:inputText id="phone" value="#{memberManagedBean.phone}" required="true" label="Phone no"/>
+                 <p:message for="phone" />
                 <h:outputLabel for="address">Address: </h:outputLabel>
                 <p:inputText id="address" value="#{memberManagedBean.address}" required="true" label="Address"/>
+                 <p:message for="address" />
                 <p:commandButton value="Submit" 
                                  actionListener="#{memberManagedBean.registerMember}"
                                  update="@form"
                                  />
-            </p:panelGrid>
+                </h:panelGrid>
+            </p:panel>
         </h:form>
     </ui:define>
 
