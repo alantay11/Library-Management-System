@@ -47,7 +47,7 @@ public class LendAndReturnManagedBean implements Serializable {
     private Long bookId;
     private String isbn;
 
-    private List<Book> selectedBooks;
+    private Book selectedBook;
     private Member selectedMember;
     private List<LendAndReturn> lendAndReturns;
     private LendAndReturn selectedLendAndReturn;
@@ -55,7 +55,7 @@ public class LendAndReturnManagedBean implements Serializable {
     private String message;
 
     public void clearSelected() {
-        this.selectedBooks = null;
+        this.selectedBook = null;
         this.selectedMember = null;
         this.lendAndReturns = null;
     }
@@ -85,11 +85,11 @@ public class LendAndReturnManagedBean implements Serializable {
 
     public void lendBook(ActionEvent evt) throws EntityManagerException {
         try {
-            lendAndReturnSessionBeanLocal.lendBook(selectedMember.getIdentityNo(), selectedBooks.get(0).getIsbn());
-            this.message = selectedBooks.get(0).getTitle() + " has been lent to " + selectedMember.getFirstName() + " " + selectedMember.getLastName();
+            lendAndReturnSessionBeanLocal.lendBook(selectedMember.getIdentityNo(), selectedBook.getIsbn());
+            this.message = selectedBook.getTitle() + " has been lent to " + selectedMember.getFirstName() + " " + selectedMember.getLastName();
             this.saveMessage();
         } catch (BookNotAvailableException ex) {
-            this.message = selectedBooks.get(0).getTitle() + " is not available.";
+            this.message = selectedBook.getTitle() + " is not available.";
             this.saveMessage();
         }
     }
@@ -120,10 +120,10 @@ public class LendAndReturnManagedBean implements Serializable {
 
     public void setSelectedMember(Member selectedMember) {
         this.selectedMember = selectedMember;
-        this.setLendAndReturns(this.selectedMember.getLending()
-                .stream()
-                .filter(l -> l.getReturnDate() == null)
-                .collect(Collectors.toList()));
+//        this.setLendAndReturns(this.selectedMember.getLending()
+//                .stream()
+//                .filter(l -> l.getReturnDate() == null)
+//                .collect(Collectors.toList()));
     }
 
     public List<LendAndReturn> retrieveAllLendAndReturnsOfMember(ActionEvent evt) throws MemberNotFoundException {
@@ -138,12 +138,12 @@ public class LendAndReturnManagedBean implements Serializable {
         this.lendAndReturnSessionBeanLocal = lendAndReturnSessionBeanLocal;
     }
 
-    public List<Book> getSelectedBooks() {
-        return selectedBooks;
+    public Book getSelectedBook() {
+        return selectedBook;
     }
 
-    public void setSelectedBooks(List<Book> selectedBooks) {
-        this.selectedBooks = selectedBooks;
+    public void setSelectedBook(Book selectedBook) {
+        this.selectedBook = selectedBook;
     }
 
     public Long getLendId() {

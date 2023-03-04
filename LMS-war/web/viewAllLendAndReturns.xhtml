@@ -8,23 +8,22 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="content">
-        <h:form>
+        <h:form id="form">
             <p:growl id="growl"/>  
 
             <p:dataTable selectionMode="single"
-                         value="#{lendAndReturnManagedBean.lendAndReturns}" 
+                         value="#{lendAndReturnManagedBean.selectedMember.lending}" 
                          selection="#{lendAndReturnManagedBean.selectedLendAndReturn}"
                          rowKey="#{lendAndReturn.lendId}"
                          resizableColumns="true"
                          var="lendAndReturn"
                          style="padding: 10px;"
                          >
+                <p:ajax event="rowSelect" update="form:returnBook" />
+                
                 <f:facet name="header">
                     Lend And Returns
-                </f:facet>
-                <p:column headerText="ID" style="width:5%">
-                    <h:outputText value="#{lendAndReturn.lendId}" />
-                </p:column>
+                </f:facet>             
 
                 <p:column headerText="Lend Date" style="width:5%">
                     <h:outputText value="#{lendAndReturn.lendDate}" >
@@ -32,25 +31,37 @@
                     </h:outputText>
                 </p:column>
 
-                <!--                <p:column headerText="Return Date" style="width:5%">
-                                    <h:outputText value="#add{lendAndReturn.returnDate}">
-                                        <f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
-                                    </h:outputText>
-                                </p:column>-->
+                <p:column headerText="Return Date" style="width:5%">
+                    <h:outputText value="#{lendAndReturn.returnDate}">
+                        <f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+                </p:column>
 
                 <p:column headerText="Fine Paid" style="width:5%">
                     <h:outputText value="#{lendAndReturn.fineAmount}" />
                 </p:column>
-                <p:column headerText="Book ID" style="width:5%">
-                    <h:outputText value="#{lendAndReturn.bookId}"/>
+
+                <p:column headerText="Title" style="width:30%" filterBy="#{lendAndReturn.book.title}" filterMatchMode="contains">
+                    <h:outputText value="#{lendAndReturn.book.title}" />
+                </p:column>
+
+                <p:column headerText="ISBN" style="width:30%" filterBy="#{lendAndReturn.book.isbn}" filterMatchMode="contains">
+                    <h:outputText value="#{lendAndReturn.book.isbn}" />
+                </p:column>
+
+                <p:column headerText="Author" style="width:20%" filterBy="#{lendAndReturn.book.author}" filterMatchMode="contains">
+                    <h:outputText value="#{lendAndReturn.book.author}" />
                 </p:column>
             </p:dataTable>
 
             <p:commandButton value="Return Book" 
+                             id="returnBook"
                              actionListener="#{lendAndReturnManagedBean.calculateFine}"
                              action="returnBook.xhtml?faces-redirect=true"
-                             style="margin-left: 10px;"                             
-                             rendered="#{not empty lendAndReturnManagedBean.lendAndReturns}">
+                             style="margin-left: 10px;"             
+                             disabled="#{lendAndReturnManagedBean.selectedLendAndReturn.returnDate != null}"
+                             rendered="#{not empty lendAndReturnManagedBean.selectedMember.lending}"
+                             >
             </p:commandButton>   
         </h:form>
     </ui:define>

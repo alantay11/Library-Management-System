@@ -11,9 +11,9 @@
 
         <h:form>
             <p:growl id="growl"/>  
-            
-            <p:dataTable selectionMode="multiple" 
-                         selection="#{lendAndReturnManagedBean.selectedBooks}" 
+
+            <p:dataTable selectionMode="single" 
+                         selection="#{lendAndReturnManagedBean.selectedBook}" 
                          rowKey="#{book.bookId}" 
                          resizableColumns="true" 
                          var="book" 
@@ -23,21 +23,19 @@
                 <f:facet name="header">
                     Books
                 </f:facet>
-                <p:column headerText="ID" style="width:5%">
-                    <h:outputText value="#{book.bookId}" />
-                </p:column>
 
-                <p:column headerText="Title" style="width:30%">
+                <p:column headerText="Title" style="width:30%" filterBy="#{book.title}" filterMatchMode="contains">
                     <h:outputText value="#{book.title}" />
                 </p:column>
 
-                <p:column headerText="ISBN" style="width:30%">
+                <p:column headerText="ISBN" style="width:30%" filterBy="#{book.isbn}" filterMatchMode="contains">
                     <h:outputText value="#{book.isbn}" />
                 </p:column>
 
-                <p:column headerText="Author" style="width:20%">
+                <p:column headerText="Author" style="width:20%" filterBy="#{book.author}" filterMatchMode="contains">
                     <h:outputText value="#{book.author}" />
                 </p:column>
+                
                 <p:column headerText="Available" style="width:5%">
                     <h:outputText value="#{book.available ? '✓' : 'X'}"/>
                 </p:column>
@@ -54,30 +52,27 @@
                 <f:facet name="header">
                     Members
                 </f:facet>
-                <p:column headerText="ID" style="width:5%">
-                    <h:outputText value="#{member.memberId}" />
-                </p:column>
-
-                <p:column headerText="First Name" style="width:5%">
+                <p:column headerText="First Name" style="width:10%" filterBy="#{member.firstName}" filterMatchMode="contains">
                     <h:outputText value="#{member.firstName}" />
                 </p:column>
-
-                <p:column headerText="Last Name" style="width:5%">
+                
+                <p:column headerText="Last Name" style="width:10%" filterBy="#{member.lastName}" filterMatchMode="contains">
                     <h:outputText value="#{member.lastName}" />
                 </p:column>
 
-                <p:column headerText="Gender" style="width:5%">
+                <p:column headerText="Gender" style="width:3%" >
                     <h:outputText value="#{member.gender}" />
                 </p:column>
-                <p:column headerText="Identity No" style="width:5%">
+                
+                <p:column headerText="Identity No" style="width:10%" filterBy="#{member.identityNo}" filterMatchMode="contains">
                     <h:outputText value="#{member.identityNo}"/>
                 </p:column>
 
-                <p:column headerText="Phone" style="width:5%">
+                <p:column headerText="Phone" style="width:10%" filterBy="#{member.phone}" filterMatchMode="contains">
                     <h:outputText value="#{member.phone}" />
                 </p:column>
 
-                <p:column headerText="Address" style="width:5%">
+                <p:column headerText="Address" style="width:10%" filterBy="#{member.address}" filterMatchMode="contains">
                     <h:outputText value="#{member.address}" />
                 </p:column>
             </p:dataTable>

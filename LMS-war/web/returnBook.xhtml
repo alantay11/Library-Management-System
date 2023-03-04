@@ -28,7 +28,7 @@
                     <h:outputText id="fineAmount" value="#{lendAndReturnManagedBean.fineAmount}"/>
                     <p:message for="fineAmount" />
                     <h:outputLabel for="paymentDetails">Enter payment details: </h:outputLabel>
-                    <p:inputText id="paymentDetails" required="true" label="Payment Details"/>
+                    <p:inputText id="paymentDetails" required="#{lendAndReturnManagedBean.fineAmount > '0'}" label="Payment Details"/>
                     <p:message for="paymentDetails" />
                     <p:commandButton value="Return" 
                                      actionListener="#{lendAndReturnManagedBean.returnBook}"
