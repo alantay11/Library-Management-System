@@ -56,6 +56,7 @@ public class StaffSessionBean implements StaffSessionBeanLocal {
     }
 
     
+    @Override
     public Staff retrieveStaffByUsername(String username) throws StaffNotFoundException
     {
         Query query = em.createQuery("SELECT s FROM Staff s WHERE s.username = :inUsername");
@@ -68,6 +69,17 @@ public class StaffSessionBean implements StaffSessionBeanLocal {
         catch(NoResultException | NonUniqueResultException ex)
         {
             throw new StaffNotFoundException("Staff Username " + username + " does not exist!");
+        }
+    }
+    
+    @Override
+    public void changeStaffPassword(String username, String newPassword) {
+    try {
+            Staff staff = retrieveStaffByUsername(username);
+            staff.setPassword(newPassword);
+            em.flush();
+            } catch (StaffNotFoundException ex) {
+            System.out.println("this can't be happening D:");
         }
     }
 }

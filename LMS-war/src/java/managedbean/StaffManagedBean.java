@@ -16,9 +16,10 @@ import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.ExternalContext;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.validator.ValidatorException;
 
 /**
  *
@@ -34,11 +35,56 @@ public class StaffManagedBean implements Serializable {
     private String lastName;
     private String username;
     private String password;
+    private Staff staff;
 
+    private String oldPassword;
+    private String newPassword;
+    private String confirmPassword;
     private String message;
 
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
+
+    public void validateOldPassword(FacesContext context, UIComponent component, Object value) {
+        password = this.staff.getPassword();
+        String oldPassword = (String) value;
+
+        if (!password.equals(oldPassword)) {
+            FacesMessage error = new FacesMessage(FacesMessage.SEVERITY_ERROR, "You entered the wrong current password", null);
+            this.message = "You entered the wrong current password";
+            this.saveMessage(FacesMessage.SEVERITY_ERROR);
+            throw new ValidatorException(error);
+        }
+    }
+
+    public void resetStaffPassword(ActionEvent evt) throws StaffNotFoundException {
+        this.staffSessionBeanLocal.changeStaffPassword(this.staff.getUsername(), this.confirmPassword);
+        this.staff = retrieveStaffByUsername(evt);
+    }
+
+    public String getOldPassword() {
+        return oldPassword;
+    }
+
+    public void setOldPassword(String oldPassword) {
+        this.oldPassword = oldPassword;
+    }
+
     public Staff createStaff(ActionEvent evt) throws InvalidLoginException, EntityManagerException {
-        Staff staff = new Staff();
+        this.staff = new Staff();
         staff.setFirstName(firstName);
         staff.setLastName(lastName);
         staff.setUsername(username);
@@ -55,7 +101,7 @@ public class StaffManagedBean implements Serializable {
 
     public void loginStaff(ActionEvent evt) throws IOException {
         try {
-            Staff staff = retrieveStaffByUsername(evt);
+            this.staff = retrieveStaffByUsername(evt);
             //this.message = "Welcome " + staff.getFirstName() + " " + staff.getLastName();
             staffSessionBeanLocal.loginStaff(username, password);
             FacesContext.getCurrentInstance().getExternalContext().redirect("viewAllMembers.xhtml");
@@ -66,6 +112,38 @@ public class StaffManagedBean implements Serializable {
             this.message = "Your username or password is wrong";
             this.saveMessage(FacesMessage.SEVERITY_ERROR);
         }
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public Staff getStaff() {
+        return staff;
+    }
+
+    public void setStaff(Staff staff) {
+        this.staff = staff;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     private Staff retrieveStaffByUsername(ActionEvent evt) throws StaffNotFoundException {

@@ -23,5 +23,7 @@ public interface StaffSessionBeanLocal {
     public Staff loginStaff(String username, String password) throws InvalidLoginException;
 
     public Staff retrieveStaffByUsername(String username) throws StaffNotFoundException;
+
+    public void changeStaffPassword(String username, String newPassword);
     
 }

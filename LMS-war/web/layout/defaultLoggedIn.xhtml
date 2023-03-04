@@ -18,6 +18,10 @@
                 <p:menuitem value="Lend a book" action="lendBook.xhtml?faces-redirect=true"  />
                 <p:menuitem value="Loan Management" action="viewAllMembers.xhtml?faces-redirect=true"  />
 
+                <p:submenu label="#{staffManagedBean.staff.firstName}">
+                    <p:menuitem value="Change Password" action="resetStaffPassword.xhtml?faces-redirect=true" />
+                </p:submenu>
+
                 <f:facet name="options">
                     <p:commandButton value="Logout" 
                                      action="login.xhtml?faces-redirect=true" />
