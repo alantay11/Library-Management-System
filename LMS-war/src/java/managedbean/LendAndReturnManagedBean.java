@@ -96,8 +96,6 @@ public class LendAndReturnManagedBean implements Serializable {
 
     public void calculateFine() {
         this.fineAmount = lendAndReturnSessionBeanLocal.calculateFine(selectedLendAndReturn.getLendId());
-        this.message = "The fine will be $" + fineAmount + " if you return today";
-        this.saveMessage();
     }
 
     public void returnBook(ActionEvent evt) {
@@ -120,10 +118,6 @@ public class LendAndReturnManagedBean implements Serializable {
 
     public void setSelectedMember(Member selectedMember) {
         this.selectedMember = selectedMember;
-//        this.setLendAndReturns(this.selectedMember.getLending()
-//                .stream()
-//                .filter(l -> l.getReturnDate() == null)
-//                .collect(Collectors.toList()));
     }
 
     public List<LendAndReturn> retrieveAllLendAndReturnsOfMember(ActionEvent evt) throws MemberNotFoundException {

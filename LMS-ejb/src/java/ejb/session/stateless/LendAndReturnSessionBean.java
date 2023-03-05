@@ -85,7 +85,7 @@ public class LendAndReturnSessionBean implements LendAndReturnSessionBeanLocal {
         double fineAmt = (daysDiff > 14) ? (daysDiff - 14) * 0.50 : 0;
         BigDecimal fine = new BigDecimal(fineAmt);
         System.out.println(fine);
-        return fine;
+        return fine.setScale(2);
     }
 
     // Use Case 5

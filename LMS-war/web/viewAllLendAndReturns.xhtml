@@ -20,7 +20,7 @@
                          style="padding: 10px;"
                          >
                 <p:ajax event="rowSelect" update="form:returnBook" />
-                
+
                 <f:facet name="header">
                     Lend And Returns
                 </f:facet>             
@@ -38,7 +38,9 @@
                 </p:column>
 
                 <p:column headerText="Fine Paid" style="width:5%">
-                    <h:outputText value="#{lendAndReturn.fineAmount}" />
+                    <h:outputText value="#{lendAndReturn.fineAmount}" >
+                    <f:convertNumber type="number" pattern="#0.00" />
+                    </h:outputText>
                 </p:column>
 
                 <p:column headerText="Title" style="width:30%" filterBy="#{lendAndReturn.book.title}" filterMatchMode="contains">

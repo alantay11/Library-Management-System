@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
 
 /**
  *
@@ -36,8 +37,9 @@ public class LendAndReturn implements Serializable {
     @Column//(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date returnDate;
-    @Column(nullable = false)
+    @Column(nullable = false, precision = 11, scale = 2)
     @DecimalMin("0.00")
+    @Digits(integer = 9, fraction = 2)
     private BigDecimal fineAmount;
 
     @Column(nullable = false)

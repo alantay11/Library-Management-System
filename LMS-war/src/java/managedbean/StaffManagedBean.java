@@ -60,7 +60,7 @@ public class StaffManagedBean implements Serializable {
 
     public void validateOldPassword(FacesContext context, UIComponent component, Object value) {
         password = this.staff.getPassword();
-        String oldPassword = (String) value;
+        this.oldPassword = (String) value;
 
         if (!password.equals(oldPassword)) {
             FacesMessage error = new FacesMessage(FacesMessage.SEVERITY_ERROR, "You entered the wrong current password", null);
@@ -102,7 +102,6 @@ public class StaffManagedBean implements Serializable {
     public void loginStaff(ActionEvent evt) throws IOException {
         try {
             this.staff = retrieveStaffByUsername(evt);
-            //this.message = "Welcome " + staff.getFirstName() + " " + staff.getLastName();
             staffSessionBeanLocal.loginStaff(username, password);
             FacesContext.getCurrentInstance().getExternalContext().redirect("viewAllMembers.xhtml");
         } catch (StaffNotFoundException ex) {
