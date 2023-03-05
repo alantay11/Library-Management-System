@@ -63,9 +63,7 @@ public class StaffManagedBean implements Serializable {
         this.oldPassword = (String) value;
 
         if (!password.equals(oldPassword)) {
-            FacesMessage error = new FacesMessage(FacesMessage.SEVERITY_ERROR, "You entered the wrong current password", null);
-            this.message = "You entered the wrong current password";
-            this.saveMessage(FacesMessage.SEVERITY_ERROR);
+            FacesMessage error = new FacesMessage(FacesMessage.SEVERITY_ERROR, "You entered the wrong current password", null);            
             throw new ValidatorException(error);
         }
     }
@@ -73,6 +71,8 @@ public class StaffManagedBean implements Serializable {
     public void resetStaffPassword(ActionEvent evt) throws StaffNotFoundException {
         this.staffSessionBeanLocal.changeStaffPassword(this.staff.getUsername(), this.confirmPassword);
         this.staff = retrieveStaffByUsername(evt);
+        this.message = "Password successfully changed";
+        this.saveMessage(FacesMessage.SEVERITY_INFO);
     }
 
     public String getOldPassword() {
