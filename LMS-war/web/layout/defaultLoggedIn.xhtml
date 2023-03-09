@@ -14,17 +14,18 @@
     <h:body>
         <h:form> 
             <p:menubar>
-                <p:menuitem value="Register Member" action="registerMember.xhtml?faces-redirect=true"  />
-                <p:menuitem value="Lend a book" action="lendBook.xhtml?faces-redirect=true"  />
-                <p:menuitem value="Loan Management" action="viewAllMembers.xhtml?faces-redirect=true"  />
+                <p:menuitem value="Register Member" action="registerMember.xhtml?faces-redirect=true"  icon="fa fa-plus-square" />
+                <p:menuitem value="Lend a book" action="lendBook.xhtml?faces-redirect=true" icon="fa fa-book" />
+                <p:menuitem value="Loan Management" action="viewAllMembers.xhtml?faces-redirect=true" icon="fa fa-leanpub" />
 
-                <p:submenu label="#{staffManagedBean.staff.firstName}">
+                <p:submenu label="#{staffManagedBean.staff.firstName}" icon="fa fa-user">
                     <p:menuitem value="Change Password" action="resetStaffPassword.xhtml?faces-redirect=true" />
                 </p:submenu>
 
                 <f:facet name="options">
                     <p:commandButton value="Logout" 
-                                     action="login.xhtml?faces-redirect=true" />
+                                     action="login.xhtml?faces-redirect=true"
+                                     icon="fa fa-sign-out"/>
                 </f:facet>
             </p:menubar>
         </h:form> 

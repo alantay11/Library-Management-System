@@ -1,0 +1,4 @@
+.ui-datatable .ui-state-highlight {
+    background-color: yellow !important;
+    padding: 10px;
+}
