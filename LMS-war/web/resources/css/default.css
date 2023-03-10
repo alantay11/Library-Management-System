@@ -1,0 +1,38 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Mar 10, 2023, 1:15:39 PM
+    Author     : Uni
+*/
+button.ui-button, button.ui-button:hover, button.ui-button:focus {
+    background-color: sienna;
+    border-color: sienna;
+}
+
+button.ui-button:hover, button.ui-button:focus {
+    background-color: peru;
+    border-color: peru;
+}
+
+body {
+    color: white
+}
+
+.ui-state-highlight, .ui-state-active {
+    background-color: sienna !important;
+}
+
+.ui-inputtext:focus, .ui-inputtext:hover, .ui-password:focus, .ui-password:hover, .ui-selectonemenu:focus, .ui-selectonemenu:hover, .ui-selectonemenu:active {
+    border-color: sienna !important;
+}
+
+.ui-layout-unit {
+    background-color: rgba(0, 0, 0, 0) !important;
+    border-color: rgba(0, 0, 0, 0) !important;
+}
+
+
+
