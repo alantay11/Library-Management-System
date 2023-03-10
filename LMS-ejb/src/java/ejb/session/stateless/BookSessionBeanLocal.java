@@ -23,5 +23,7 @@ public interface BookSessionBeanLocal {
     public Book retrieveBookwithISBN(String isbn) throws BookNotFoundException;
 
     List<Book> retrieveAllBooks();
+
+    public Book addBook(String title, String isbn, String author) throws EntityManagerException;
     
 }

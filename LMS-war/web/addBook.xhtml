@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./layout/defaultLoggedIn.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+        <h:form>
+
+            <p:panel header="Add a book">
+                <p:growl id="growl" globalOnly="true"/>  
+
+                <h:panelGrid id="grid" columns="3" cellpadding="5"> 
+                    <h:outputLabel for="title">Title: </h:outputLabel>
+                    <p:inputText id="title" value="#{bookManagedBean.title}" required="true" label="Title"/>
+                    <p:message for="title" />
+                    <h:outputLabel for="isbn">ISBN: </h:outputLabel>
+                    <p:inputText id="isbn" value="#{bookManagedBean.isbn}" required="true" label="ISBN"/>
+                    <p:message for="isbn" />
+
+                    <h:outputLabel for="author">Author: </h:outputLabel>
+                    <p:inputText id="author" value="#{bookManagedBean.author}" required="true" label="Author"/>
+                    <p:message for="author" />
+                    <p:commandButton value="Add" 
+                                     actionListener="#{bookManagedBean.addBook}"
+                                     update="@form"
+                                     />
+                </h:panelGrid>
+            </p:panel>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

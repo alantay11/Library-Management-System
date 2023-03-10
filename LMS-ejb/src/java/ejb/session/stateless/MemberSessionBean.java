@@ -39,7 +39,7 @@ public class MemberSessionBean implements MemberSessionBeanLocal {
         }
     }
 
-    // Use Case 2, don't know the input format yet
+    // Use Case 2
     @Override
     public Member registerMember(String firstName, String lastName, GenderEnumeration gender,
             Integer age, String identityNo, String phone, String address) throws EntityManagerException {

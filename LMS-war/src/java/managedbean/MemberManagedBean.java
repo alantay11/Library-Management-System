@@ -61,12 +61,23 @@ public class MemberManagedBean {
     public void registerMember(ActionEvent evt) throws EntityManagerException {
         memberSessionBeanLocal.registerMember(firstName, lastName, gender, age, identityNo, phone, address);
         this.saveMessageRegisterMember(evt);
+        this.clearFields();
     }
 
     public void saveMessageRegisterMember(ActionEvent evt) {
         FacesContext context = FacesContext.getCurrentInstance();
 
         context.addMessage(null, new FacesMessage(firstName + " " + lastName + " registered"));
+    }
+
+    private void clearFields() {
+        this.firstName = null;
+        this.lastName = null;
+        this.gender = null;
+        this.age = null;
+        this.identityNo = null;
+        this.phone = null;
+        this.address = null;
     }
 
     private Member retrieveMemberwithID(ActionEvent evt) throws MemberNotFoundException {

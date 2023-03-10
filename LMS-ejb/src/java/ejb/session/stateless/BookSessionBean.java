@@ -39,6 +39,19 @@ public class BookSessionBean implements BookSessionBeanLocal {
     }
 
     @Override
+    public Book addBook(String title, String isbn, String author) throws EntityManagerException {
+        try {
+            Book book = new Book();
+            book.setTitle(title);
+            book.setIsbn(isbn);
+            book.setAuthor(author);
+            return createBook(book);
+        } catch (EntityManagerException ex) {
+            throw ex;
+        }
+    }
+
+    @Override
     public Book retrieveBookwithISBN(String isbn) throws BookNotFoundException {
         Query query = em.createQuery("SELECT b FROM Book b WHERE b.isbn = :isbn");
         query.setParameter("isbn", isbn);
