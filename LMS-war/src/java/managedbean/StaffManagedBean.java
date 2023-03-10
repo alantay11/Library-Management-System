@@ -103,8 +103,8 @@ public class StaffManagedBean implements Serializable {
         try {
             this.staff = retrieveStaffByUsername(evt);
             staffSessionBeanLocal.loginStaff(username, password);
-            FacesContext.getCurrentInstance().getExternalContext().redirect("secret/viewAllMembers.xhtml");
-            return "secret/viewAllMembers.xhtml";
+            FacesContext.getCurrentInstance().getExternalContext().redirect("secret/index.xhtml");
+            return "secret/index.xhtml";
         } catch (StaffNotFoundException ex) {
             this.message = "This staff member doesn't exist!";
             this.saveMessage(FacesMessage.SEVERITY_ERROR);
@@ -114,6 +114,15 @@ public class StaffManagedBean implements Serializable {
             this.saveMessage(FacesMessage.SEVERITY_ERROR);
             return "login.xhtml";
         }
+    }
+    
+    public String logoutStaff() {
+        this.clearFields();
+        return "/login.xhtml?faces-redirect=true";
+    }
+    
+    private void clearFields() {
+        this.staff = null;
     }
 
     public String getFirstName() {

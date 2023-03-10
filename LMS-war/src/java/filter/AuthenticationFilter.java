@@ -35,10 +35,7 @@ public class AuthenticationFilter implements Filter {
             FilterChain chain)
             throws IOException, ServletException {
         HttpServletRequest request1 = (HttpServletRequest) request;
-        if (staffManagedBean == null
-                || staffManagedBean.getStaff() == null) {
-            //redirect to login page if user is not logged in
-            //and trying to access "secret/*" paths
+        if (staffManagedBean == null || staffManagedBean.getStaff() == null) {
             ((HttpServletResponse) response).sendRedirect(request1.getContextPath() + "/login.xhtml");
         } else {
             //authenticated - continue

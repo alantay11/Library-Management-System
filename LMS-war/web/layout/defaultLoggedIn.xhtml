@@ -11,7 +11,7 @@
         <title>Library Management System</title>
     </h:head>
 
-    <h:body>
+    <h:body style="background-image: url(../resources/img/city.jpg)">
         <h:form> 
             <p:menubar>
                 <p:menuitem value="Register Member" action="registerMember.xhtml?faces-redirect=true"  icon="fa fa-plus-square" />
@@ -25,11 +25,12 @@
 
                 <f:facet name="options">
                     <p:commandButton value="Logout" 
-                                     action="login.xhtml?faces-redirect=true"
+                                     action="#{staffManagedBean.logoutStaff}"
                                      icon="fa fa-sign-out"/>
                 </f:facet>
             </p:menubar>
         </h:form> 
+
 
         <p:layoutUnit position="center">
             <ui:insert name="content"></ui:insert>
