@@ -63,7 +63,7 @@ public class StaffManagedBean implements Serializable {
         this.oldPassword = (String) value;
 
         if (!password.equals(oldPassword)) {
-            FacesMessage error = new FacesMessage(FacesMessage.SEVERITY_ERROR, "You entered the wrong current password", null);            
+            FacesMessage error = new FacesMessage(FacesMessage.SEVERITY_ERROR, "You entered the wrong current password", null);
             throw new ValidatorException(error);
         }
     }
@@ -99,17 +99,20 @@ public class StaffManagedBean implements Serializable {
         context.getExternalContext().getFlash().setKeepMessages(true);
     }
 
-    public void loginStaff(ActionEvent evt) throws IOException {
+    public String loginStaff(ActionEvent evt) throws IOException {
         try {
             this.staff = retrieveStaffByUsername(evt);
             staffSessionBeanLocal.loginStaff(username, password);
-            FacesContext.getCurrentInstance().getExternalContext().redirect("viewAllMembers.xhtml");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("secret/viewAllMembers.xhtml");
+            return "secret/viewAllMembers.xhtml";
         } catch (StaffNotFoundException ex) {
             this.message = "This staff member doesn't exist!";
             this.saveMessage(FacesMessage.SEVERITY_ERROR);
+            return "login.xhtml";
         } catch (InvalidLoginException ex) {
             this.message = "Your username or password is wrong";
             this.saveMessage(FacesMessage.SEVERITY_ERROR);
+            return "login.xhtml";
         }
     }
 

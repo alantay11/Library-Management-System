@@ -12,6 +12,14 @@
         <param-name>primefaces.FONT_AWESOME</param-name>
         <param-value>true</param-value>
     </context-param>
+    <filter>
+        <filter-name>AuthenticationFilter</filter-name>
+        <filter-class>filter.AuthenticationFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthenticationFilter</filter-name>
+        <url-pattern>/secret/*</url-pattern>
+    </filter-mapping>
     <servlet>
         <servlet-name>Controller</servlet-name>
         <servlet-class>servlet.Controller</servlet-class>
@@ -45,6 +53,12 @@
     </ejb-local-ref>
     <ejb-local-ref>
         <ejb-ref-name>MemberSessionBean</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <local>ejb.session.stateless.MemberSessionBeanLocal</local>
+        <ejb-link>LMS-ejb.jar#MemberSessionBean</ejb-link>
+    </ejb-local-ref>
+    <ejb-local-ref>
+        <ejb-ref-name>MemberSessionBean1</ejb-ref-name>
         <ejb-ref-type>Session</ejb-ref-type>
         <local>ejb.session.stateless.MemberSessionBeanLocal</local>
         <ejb-link>LMS-ejb.jar#MemberSessionBean</ejb-link>
