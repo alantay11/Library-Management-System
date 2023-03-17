@@ -15,12 +15,15 @@
             <p:panel header="Login" style="width: 50%; margin: 0 auto; text-align: center;">
                 <p:growl id="growl"/>  
                 <h:panelGrid id="grid" columns="3" cellpadding="5" style="height: 20%;">
+
                     <h:outputLabel for="username">Username: </h:outputLabel>
                     <p:inputText id="username" value="#{staffManagedBean.username}" required="true" label="Username"/>
                     <p:message for="username" />
+
                     <h:outputLabel for="password">Password: </h:outputLabel>
                     <p:password id="password" value="#{staffManagedBean.password}" required="true" label="Password"/>
                     <p:message for="password" />
+
                     <p:commandButton value="Login" 
                                      actionListener="#{staffManagedBean.loginStaff}"
                                      update="@form"
@@ -29,8 +32,6 @@
 
                 </h:panelGrid>
             </p:panel>
-
         </h:form>
     </ui:define>
-
 </ui:composition>

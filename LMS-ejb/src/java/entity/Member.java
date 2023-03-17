@@ -37,7 +37,7 @@ public class Member implements Serializable {
     private GenderEnumeration gender;
     @Column(nullable = false)
     private Integer age;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String identityNo;
     @Column(nullable = false)
     private String phone;

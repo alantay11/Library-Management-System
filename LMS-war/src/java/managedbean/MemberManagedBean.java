@@ -58,16 +58,20 @@ public class MemberManagedBean {
         return GenderEnumeration.values();
     }
 
-    public void registerMember(ActionEvent evt) throws EntityManagerException {
+    public void registerMember(ActionEvent evt) {
+        try {
         memberSessionBeanLocal.registerMember(firstName, lastName, gender, age, identityNo, phone, address);
-        this.saveMessageRegisterMember(evt);
+        this.saveMessage(firstName + " " + lastName + " registered");
         this.clearFields();
+        } catch (EntityManagerException ex) {
+            this.saveMessage("A member with the same identity no. already exists!");
+        }
     }
-
-    public void saveMessageRegisterMember(ActionEvent evt) {
+    
+    public void saveMessage(String message) {
         FacesContext context = FacesContext.getCurrentInstance();
 
-        context.addMessage(null, new FacesMessage(firstName + " " + lastName + " registered"));
+        context.addMessage(null, new FacesMessage(message));
     }
 
     private void clearFields() {

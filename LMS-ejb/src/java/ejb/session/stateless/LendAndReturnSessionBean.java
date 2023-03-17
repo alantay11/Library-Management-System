@@ -9,7 +9,6 @@ import entity.Book;
 import entity.LendAndReturn;
 import entity.Member;
 import exception.BookNotAvailableException;
-import exception.BookNotFoundException;
 import exception.EntityManagerException;
 import exception.MemberNotFoundException;
 import java.math.BigDecimal;
@@ -33,9 +32,6 @@ import javax.persistence.Query;
 public class LendAndReturnSessionBean implements LendAndReturnSessionBeanLocal {
 
     @EJB
-    private BookSessionBeanLocal bookSessionBean;
-
-    @EJB
     private MemberSessionBeanLocal memberSessionBean;
 
     @PersistenceContext(unitName = "LMS-ejbPU")
@@ -43,10 +39,10 @@ public class LendAndReturnSessionBean implements LendAndReturnSessionBeanLocal {
 
     // Use Case 3
     @Override
-    public LendAndReturn lendBook(String memberIDNum, String isbn) throws EntityManagerException, BookNotAvailableException {
+    public LendAndReturn lendBook(String memberIDNum, long bookId) throws EntityManagerException, BookNotAvailableException {
         try {
             Member member = memberSessionBean.retrieveMemberwithID(memberIDNum);
-            Book book = bookSessionBean.retrieveBookwithISBN(isbn);
+            Book book = em.find(Book.class, bookId);
             LendAndReturn lendAndReturn = new LendAndReturn();
 
             if (book.isAvailable()) {
@@ -68,7 +64,7 @@ public class LendAndReturnSessionBean implements LendAndReturnSessionBeanLocal {
                 throw new BookNotAvailableException();
             }
 
-        } catch (MemberNotFoundException | BookNotFoundException | PersistenceException ex) {
+        } catch (MemberNotFoundException | PersistenceException ex) {
             throw new EntityManagerException(ex.getMessage());
         }
     }

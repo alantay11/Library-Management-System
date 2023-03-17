@@ -20,7 +20,7 @@ import javax.ejb.Local;
 @Local
 public interface LendAndReturnSessionBeanLocal {
 
-    public LendAndReturn lendBook(String memberIDNum, String isbn) throws EntityManagerException, BookNotAvailableException;
+    public LendAndReturn lendBook(String memberIDNum, long bookId) throws EntityManagerException, BookNotAvailableException;
 
     BigDecimal calculateFine(long lendAndReturnId);
 

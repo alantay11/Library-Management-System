@@ -17,13 +17,11 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import org.primefaces.event.SelectEvent;
 
 /**
  *
@@ -75,20 +73,12 @@ public class LendAndReturnManagedBean implements Serializable {
         this.selectedLendAndReturn = selectedLendAndReturn;
     }
 
-    public void onRowSelectMember(SelectEvent event) {
-        this.setSelectedMember((Member) event.getObject());
-        this.setLendAndReturns(this.selectedMember.getLending()
-                .stream()
-                .filter(l -> l.getReturnDate() == null)
-                .collect(Collectors.toList()));
-    }
-
-    public void lendBook(ActionEvent evt) throws EntityManagerException {
+    public void lendBook(ActionEvent evt) {
         try {
-            lendAndReturnSessionBeanLocal.lendBook(selectedMember.getIdentityNo(), selectedBook.getIsbn());
+            lendAndReturnSessionBeanLocal.lendBook(selectedMember.getIdentityNo(), selectedBook.getBookId());
             this.message = selectedBook.getTitle() + " has been lent to " + selectedMember.getFirstName() + " " + selectedMember.getLastName();
             this.saveMessage();
-        } catch (BookNotAvailableException ex) {
+        } catch (BookNotAvailableException | EntityManagerException ex) {
             this.message = selectedBook.getTitle() + " is not available.";
             this.saveMessage();
         }
