@@ -34,7 +34,7 @@ public class LendAndReturn implements Serializable {
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date lendDate;
-    @Column//(nullable = false)
+    @Column
     @Temporal(TemporalType.TIMESTAMP)
     private Date returnDate;
     @Column(nullable = false, precision = 11, scale = 2)

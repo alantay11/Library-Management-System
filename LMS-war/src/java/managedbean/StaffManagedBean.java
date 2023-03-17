@@ -69,7 +69,7 @@ public class StaffManagedBean implements Serializable {
     }
 
     public void resetStaffPassword(ActionEvent evt) throws StaffNotFoundException {
-        this.staffSessionBeanLocal.changeStaffPassword(this.staff.getUsername(), this.confirmPassword);
+        this.staffSessionBeanLocal.changeStaffPassword(this.staff.getUserName(), this.confirmPassword);
         this.staff = retrieveStaffByUsername(evt);
         this.message = "Password successfully changed";
         this.saveMessage(FacesMessage.SEVERITY_INFO);
@@ -87,7 +87,7 @@ public class StaffManagedBean implements Serializable {
         this.staff = new Staff();
         staff.setFirstName(firstName);
         staff.setLastName(lastName);
-        staff.setUsername(username);
+        staff.setUserName(username);
         staff.setPassword(password);
         return staffSessionBeanLocal.createStaff(staff);
     }
