@@ -59,7 +59,7 @@ public class StaffSessionBean implements StaffSessionBeanLocal {
     @Override
     public Staff retrieveStaffByUsername(String username) throws StaffNotFoundException
     {
-        Query query = em.createQuery("SELECT s FROM Staff s WHERE s.username = :inUsername");
+        Query query = em.createQuery("SELECT s FROM Staff s WHERE s.userName = :inUsername");
         query.setParameter("inUsername", username);
         
         try
